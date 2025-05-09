@@ -33,6 +33,9 @@ body {
   font-size: 14px;
   line-height: 1;
 }
+ul{
+	list-style-type: none;
+}
 
 #header{
     background-color: #f8f9fa;
@@ -188,8 +191,15 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  object-fit:cover;
 }
 
 .nav-item-header{
   line-height: 50px;
+}
+
+.bike-detail-container{
+	padding:12px;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
