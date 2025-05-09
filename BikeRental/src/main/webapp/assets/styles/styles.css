@@ -36,6 +36,9 @@ body {
 ul{
 	list-style-type: none;
 }
+p{
+	font-size: 14px
+}
 
 #header{
     background-color: #f8f9fa;
