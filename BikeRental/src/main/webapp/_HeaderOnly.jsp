@@ -19,7 +19,7 @@
               <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                   <li class="nav-item nav-item-header">
-                    <a class="nav-link active" aria-current="page" href="#main-content">Thuê Xe</a>
+                    <a class="nav-link " aria-current="page" href="SearchBikes.jsp">Thuê Xe</a>
                   </li>
                   <li class="nav-item nav-item-header dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

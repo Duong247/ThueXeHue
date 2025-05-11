@@ -21,7 +21,7 @@
 <body>
 <%// <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">%>
 <%@include file="_HeaderOnly.jsp"%>
-<div class="container" style="min-height: 614px;margin-top: 170px">
+<div class="container" style="min-height: 614px;margin-top: 82px">
         <div class="row align-items-start g-4">
             <div class="col-md-8 col-12" >
                 <div class="head-col text-left">
