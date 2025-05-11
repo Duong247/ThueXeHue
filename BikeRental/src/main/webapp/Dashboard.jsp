@@ -23,7 +23,7 @@
 	    <ul class="btn-list">
 	      <li><a href="#"><i class="fa-solid fa-gauge"></i><span class="sidebar-content">Dashboard</span></a>  </li>
 	      <li><a href="#"><i class="fa-solid fa-motorcycle"></i><span class="sidebar-content">Xe của tôi</span></a>  </li>
-	      <li><a href="#"><i class="fa-solid fa-gauge"></i><span class="sidebar-content">Dashboard</span></a>  </li>
+	      <li><a href="#"><i class="fa-solid fa-clipboard-list"></i><span class="sidebar-content"> Quản lí đơn hàng</span></a>  </li>
 	      <li></li>
 	      <li></li>
 	    </ul>
@@ -32,7 +32,8 @@
 	</div>
 	 
 	<div id="main-content" class="bg-light p-4 content-scale" style="min-height: 85vh" >
-	  <%@include file="DashboardContent.jsp" %>
+	  
+	  <%@include file="BikesManagerment.jsp" %>
 	</div>
 
 </div>

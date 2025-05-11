@@ -79,12 +79,72 @@ li >a{
 	justify-content: space-between;
 }
 
+.grp-header-content{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 15px
+}
 
+.add-bike-btn{
+	background-color: #727cf5 !important;
+	color: #fff !important;
+}
+
+.bike-card{
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	padding: 5px;
+	
+}
+.upper-bike-inf{
+	display: flex;
+	
+	align-items: flex-start;
+}
+
+.bike-img{
+	width: 100px;
+	height:100px;
+	object-fit: cover;
+	display: inline-block;
+}
+
+.bike-inf{
+	display: inline-block;
+	padding:0 5px;
+}
+
+.bike-inf > p{
+	margin-bottom: 5px!important;
+	
+}
+
+.bike-status{
+	padding: 5px;
+	font-size: 14px;
+	display: inline-block;
+	border-radius: 5px;
+}
+.bike-busy{
+	background-color: #dc3545;
+	color: #fff;
+}
+
+.bike-ready{
+	background-color: #198754;
+	color: #fff;
+}
+
+.cover{
+	min-height: 500px
+}
 
 @media (max-width: 768px) {
 	.content-scale{
 	 	margin-left: 65px !important;
 	}
 }
+
+
 
 
