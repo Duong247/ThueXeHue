@@ -36,9 +36,6 @@ body {
 ul{
 	list-style-type: none;
 }
-p{
-	font-size: 14px
-}
 
 #header{
     background-color: #f8f9fa;
@@ -147,26 +144,27 @@ p{
 }
 
 .form-login-container{
-  margin:70px auto;
-  width: 1000px;
-  border: #ccc   1px solid; 
-  border-radius: 20px;
-  height: 400px;
+    margin: 70px auto;
+    max-width: 1000px !important;
+    border: #ccc 1px solid;
+    border-radius: 20px;
+    /*height: 400px;*/
 }
 
 .left-side-login{
   /* #f6f6f6 */
   /* background: linear-gradient(161deg,rgba(144, 247, 236, 1) 18%, rgba(50, 204, 188, 1) 92%); */
   border-radius: 20px 0 0 20px;
+  background-color: #ccc;
 }
 .side-cover{
   padding: 30px;
-  height: 398px;
+  /*height: 398px;*/
 }
 
 
 .logo-login{
-  width: 35px;
+  width: 50px;
   /* height: 50px; */
   border-radius: 50%;
   display: inline-block;
@@ -184,10 +182,11 @@ p{
     display: flex;
     align-items: center; /* Căn giữa theo chiều dọc */
     gap: 10px;
+    margin-left: 18px;
 }
 
 .head-text-cover{
-  margin: 100px auto;
+  margin: 116px auto;
 }
 
 .mini-ava{
@@ -206,3 +205,31 @@ p{
 	border-radius: 8px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+.register-form-container{
+	padding: 20px
+}
+
+.logo-register-form{
+	display: block;
+	margin: 20px 0px;
+	margin-bottom: 60px
+}
+
+@media (max-width: 768px) { 
+	.head-text-cover{
+		display: none
+	}
+	.left-side-login{
+		border-radius:15px 15px 0 0; 
+	}
+	.form-login-container{
+		width: 95% !important;
+	}
+}
+
+
+
+
+
+

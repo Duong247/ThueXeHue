@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.transition-width {
+  transition: width 0.4s ease;
+  overflow: hidden;
+}
+
+#sidebar.collapsed {
+  width: 65px !important;
+}
+
+#sidebar.collapsed .sidebar-content {
+  display: none;
+}
+
+#sidebar{
+	width: 300px; 
+	height: 100vh; 
+	position: fixed; 
+	top: 85px; 
+	left: 0;
+}
+
+#main-content{
+	margin-left: 65px; 
+	transition: margin-left 0.4s ease;
+}
+
+.content-scale{
+	margin-left: 300px !important;
+}
+
+@media (max-width: 768px) {
+	.content-scale{
+	 	margin-left: 65px !important;
+	}
+}
+
+
