@@ -6,7 +6,7 @@
             <div class="container-fluid d-flex justify-content-between align-items-center">
               
               <!-- Logo -->
-              <a class="navbar-brand" href="Home.jsp">
+              <a class="navbar-brand" href="Home">
                 <img src="./assets/img/headerImgNoBg.png" alt="" style="display: block;width: 85px;">
               </a>
 

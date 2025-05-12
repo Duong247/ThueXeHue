@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@include file="_Header.jsp"%>
@@ -76,6 +75,26 @@
       </div>
         <div class="container text-center">
           <div class="row align-items-start g-2">
+          	<c:forEach var="item" items="${allBikes}" >
+          		<div class="col-md-3 col-6" >
+	              <div class="card" style="width: 100%;">
+	                  <img src="./assets/img/motobikes/${item.photo}" class="card-img-top" alt="...">
+	                  <div class="card-body text-left">
+	                    <div class="bike-status-group">
+	                      <p class="bike-status-available">Sẵn sàng</p>
+	                    </div>
+	                    <h5 class="card-title">${item.bikeName}</h5>
+	                    <p class="card-text">Xe SH đời mới đã đổ 2 lít xăng aloaloalao</p>
+	                    <div class="cover-rating">
+	                      <p><i class="fa-solid fa-star" style="padding: 3px;"></i>5.0</p>
+	                    </div>
+	                    <p style="line-height: 14px; color: #024bb3;"><i class="fa-solid fa-location-dot"></i> An Hòa</p>
+	                    <p style="line-height: 14px; color: #ba2b2b;font-weight: 600; font-size: 18px;"><i class="fa-solid fa-money-bill"></i>  100.000 vnd/ngày</p>
+	                    <a href="./bikeDetail.html" class="btn btn-primary" style="width: 100%;">Chi tiết</a>
+	                  </div>
+	                </div>
+	            </div>
+          	</c:forEach>
             <div class="col-md-3 col-6" >
               <div class="card" style="width: 100%;">
                   <img src="./assets/img/sh.png" class="card-img-top" alt="...">
