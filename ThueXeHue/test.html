@@ -16,6 +16,21 @@
 
     
     <title>HueBikeRent</title>
+    <style>
+      .transition-width {
+        transition: width 0.4s ease;
+        overflow: hidden;
+      }
+
+      #sidebar.collapsed {
+        width: 15px !important;
+      }
+
+      #sidebar.collapsed .sidebar-content {
+        display: none;
+      }
+
+    </style>
 </head>
 <body>
     <div id="header">
@@ -57,105 +72,19 @@
               </nav>
         </div>
     </div>
-    <div class="container" style="min-height: 600px;">
-        <div class="row align-items-start g-4">
-            <div class="col-md-8 col-12" >
-                <div class="head-col text-left">
-                    <h3> Đơn hàng của bạn</h3>
-                    <hr style="border-color: #000;">
-                </div>
-                <div class="cart-content">
-                    <div class="text-end" style="margin: 8px 0;">
-                        <button class="btn btn-danger">Xóa tất cả</button>
-                    </div>
-                    <table class="table table-bordered">
-                        <thead class="table-light">
-                          <tr>
-                            <th style="width: 120px;">Ảnh</th>
-                            <th>Thông tin xe</th>
-                            <th>Giá</th>
-                            <th style="width: 30px;">Thao tác</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr class="cart-item">
-                            <td> <img src="./assets/img/sh.png" alt="" class="cart-item-img"></td>
-                            <td>
-                                <ul>
-                                    <li><b>Tên xe:</b> Xe sh</li>
-                                    <li><b>Biển số:</b> 75-AF 01100</li>
-                                    <li><b>Màu xe:</b> Xám xi măng</li>
-                                </ul> 
-                            </td>
-                            <td>100.000đ /ngày</td>
-                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                          </tr>
-                          <tr class="cart-item">
-                            <td> <img src="./assets/img/sh.png" alt="" class="cart-item-img"></td>
-                            <td>
-                                <ul>
-                                    <li><b>Tên xe:</b> Xe sh</li>
-                                    <li><b>Biển số:</b> 75-AF 01100</li>
-                                    <li><b>Màu xe:</b> Xám xi măng</li>
-                                </ul> 
-                            </td>
-                            <td>100.000đ /ngày</td>
-                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                          </tr>
-                          
-                        </tbody> 
-                      </table>
-                      
-                </div>
-            </div>
-            <div class="col-md-4 col-12" >
-                <div class="head-col text-left">
-                    <h3> Thông tin nhận xe</h3>
-                    <hr style="border-color: #000;">
-                </div>
-                <form>
-                    <div class="mb-3">
-                        <label for="user-name" class="form-label">Họ và tên</label>
-                        <input type="text" class="form-control" id="user-name" placeholder="Nhập họ và tên">
-                      </div>
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Email</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập email">
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Số điện thoại</label>
-                      <input type="phone" class="form-control" id="exampleInputEmail1" placeholder="Nhập số điện thoại">
-                    </div>
-                    <!-- Trong phần form -->
-                    <div class="mb-3">
-                      <label for="timepickerstart" class="form-label">Ngày nhận xe:</label>
-                      <div class="input-group" id="timepickerstart" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        <input type="text" class="form-control" placeholder="dd/MM/yyyy HH:mm" data-td-target="#timepickerstart" />
-                        <span class="input-group-text" data-td-toggle="datetimepicker" data-td-target="#timepickerstart">
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="timepickerfinish" class="form-label">Ngày trả xe:</label>
-                      <div class="input-group" id="timepickerfinish" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        <input type="text" class="form-control" placeholder="dd/MM/yyyy HH:mm" data-td-target="#timepickerfinish" />
-                        <span class="input-group-text" data-td-toggle="datetimepicker" data-td-target="#timepickerfinish">
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </div>
-                    </div>
-
-                    
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-primary">Đặt xe</button>
-                    </div>
-                  </form>
-            </div>
-        </div>
+    <div class="d-flex vh-100" id="layout">
+      <div id="sidebar" class="bg-dark text-white p-3 transition-width" style="width: 30%;">
+        <button id="toggle-btn" class="btn btn-sm btn-light mb-2">☰</button>
+        <div class="sidebar-content">Sidebar content</div>
+      </div>
+      <div id="main-content" class="flex-grow-1 bg-light p-4">
+        <h1>Nội dung chính</h1>
+        <p>Đây là phần content chiếm phần còn lại.</p>
+      </div>
     </div>
+
+
+
     <div id="footer">
         <div class="footer-content">
           <p>@2025 - Bản quyền thuộc về Dương Trần</p>
@@ -164,30 +93,13 @@
     
     <!-- Script khởi tạo cuối trang -->
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const commonOptions = {
-          display: {
-            components: {
-              calendar: true,
-              date: true,
-              month: true,
-              year: true,
-              decades: true,
-              clock: true,
-              hours: true,
-              minutes: true,
-              seconds: false
-            }
-          },
-          localization: {
-            locale: 'vi'
-          }
-        };
-
-        new tempusDominus.TempusDominus(document.getElementById('timepickerstart'), commonOptions);
-        new tempusDominus.TempusDominus(document.getElementById('timepickerfinish'), commonOptions);
+      document.getElementById('toggle-btn').addEventListener('click', () => {
+        document.getElementById('sidebar').classList.toggle('collapsed');
       });
+      document.getElementById('main-content').style.marginLeft = "65px"
+
     </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.min.js" integrity="sha384-Re460s1NeyAhufAM5JwfIGWosokaQ7CH15ti6W5Y4wC/m4eJ5opJ2ivohxVM05Wd" crossorigin="anonymous"></script>
