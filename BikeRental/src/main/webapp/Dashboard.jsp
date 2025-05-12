@@ -33,7 +33,7 @@
 	 
 	<div id="main-content" class="bg-light p-4 content-scale" style="min-height: 85vh" >
 	  
-	  <%@include file="BikesManagerment.jsp" %>
+	  <%@include file="OrderManagerment.jsp" %>
 	</div>
 
 </div>
