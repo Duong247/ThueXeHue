@@ -38,7 +38,16 @@ public class BikeControler extends HttpServlet {
 	    	response.setContentType("text/html; charset=UTF-8");
 	    	response.setCharacterEncoding("UTF-8");
 	    	BikeBo bikebo = new BikeBo();
-			request.setAttribute("allBikes", bikebo.getBikesWithPagination(1,12));
+	    	int pageNum =1;
+	    	String p = request.getParameter("p");
+	    	if (p!=null) {
+	    		pageNum =  Integer.parseInt(p); 
+	    	}
+	    	
+	    	request.setAttribute("listBrands", bikebo.getBrand());
+	    	request.setAttribute("currentPage", pageNum);
+			request.setAttribute("allBikes", bikebo.getBikesWithPagination(pageNum,12));
+			request.setAttribute("pagecount", bikebo.pageCount(12));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,3 +66,7 @@ public class BikeControler extends HttpServlet {
 	}
 
 }
+
+
+
+

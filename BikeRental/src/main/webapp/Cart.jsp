@@ -37,7 +37,9 @@
                           <tr>
                             <th style="width: 120px;">Ảnh</th>
                             <th>Thông tin xe</th>
-                            <th>Giá</th>
+                            <th>Ngày nhận xe</th>
+                            <th>Ngày trả xe</th>
+                            <th>Giá / ngày</th>
                             <th style="width: 30px;">Thao tác</th>
                           </tr>
                         </thead>
@@ -51,6 +53,8 @@
                                     <li><b>Màu xe:</b> Xám xi măng</li>
                                 </ul> 
                             </td>
+                            <td></td>
+                            <td></td>
                             <td>100.000đ /ngày</td>
                             <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                             </td>
@@ -64,7 +68,13 @@
                                     <li><b>Màu xe:</b> Xám xi măng</li>
                                 </ul> 
                             </td>
-                            <td>100.000đ /ngày</td>
+                            <td>
+                            	
+                      		</td>
+                            <td>
+                            	
+                            </td>
+                            <td>100.000đ</td>
                             <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                             </td>
                           </tr>
@@ -102,7 +112,7 @@
                       </div>
                     </div>
                     <div class="mb-3">
-                      <label for="timepickerfinish" class="form-label">Ngày trả xe:</label>
+                      <label for="timepickerfinish" class="form-label">Ngày nhận xe:</label>
                       <div class="input-group" id="timepickerfinish" data-td-target-input="nearest" data-td-target-toggle="nearest">
                         <input type="text" class="form-control" placeholder="dd/MM/yyyy HH:mm" data-td-target="#timepickerfinish" />
                         <span class="input-group-text" data-td-toggle="datetimepicker" data-td-target="#timepickerfinish">
@@ -139,7 +149,6 @@
             locale: 'vi'
           }
         };
-
         new tempusDominus.TempusDominus(document.getElementById('timepickerstart'), commonOptions);
         new tempusDominus.TempusDominus(document.getElementById('timepickerfinish'), commonOptions);
       });

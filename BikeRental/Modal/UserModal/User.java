@@ -8,6 +8,7 @@ public class User {
 	private String phone;
 	private String password;
 	private Date dateOfBirth;
+	private String address;
 	private String Photo;
 	private int role;
 	
@@ -16,13 +17,15 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(int userId, String userName, String phone, String password, Date dateOfBirth, String photo, int role) {
+	public User(int userId, String userName, String phone, String password, Date dateOfBirth, String address,
+			String photo, int role) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.phone = phone;
 		this.password = password;
 		this.dateOfBirth = dateOfBirth;
+		this.address = address;
 		Photo = photo;
 		this.role = role;
 	}
@@ -67,6 +70,14 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public String getPhoto() {
 		return Photo;
 	}
@@ -82,5 +93,6 @@ public class User {
 	public void setRole(int role) {
 		this.role = role;
 	}
+
 	
 }

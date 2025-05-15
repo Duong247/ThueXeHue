@@ -35,7 +35,7 @@ public class HomeControler extends HttpServlet {
 	    	response.setContentType("text/html; charset=UTF-8");
 	    	response.setCharacterEncoding("UTF-8");
 	    	BikeBo bikebo = new BikeBo();
-			request.setAttribute("allBikes", bikebo.getAllBikes());
+			request.setAttribute("allBikes", bikebo.get_8_Bikes());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
