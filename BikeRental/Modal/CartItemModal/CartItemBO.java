@@ -7,12 +7,20 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class CartItemBO {
+	CartItemDAO cdao= new CartItemDAO();
 	public Timestamp StringToTimestamp(String dateFormat) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a", new Locale("vi", "VN"));
 		LocalDateTime ldt = LocalDateTime.parse(dateFormat, formatter);
 		Timestamp timestamp = Timestamp.valueOf(ldt);
 		return timestamp;
 	}
+	
+	public String timestampToString(Timestamp timestamp) {
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a", new Locale("vi", "VN"));
+	    LocalDateTime ldt = timestamp.toLocalDateTime();
+	    return ldt.format(formatter);
+	}
+
 	
 	public boolean checkExists(ArrayList<CartItem> list,CartItem item ) {
 		for(CartItem i:list) {
@@ -23,5 +31,11 @@ public class CartItemBO {
 		return false;
 	}
 	
-	
+	public boolean createOrder(int bikeId, long rentalFee, Timestamp pickupDate, Timestamp returnDate,
+			int userId, String pickupPlace, String returnPlace) throws Exception {
+		return cdao.addNewOrder(bikeId, rentalFee, pickupDate, returnDate, userId, pickupPlace, returnPlace);
+	}
+	public boolean createOrder2(int userId, String pickupPlace, String returnPlace,ArrayList<CartItem> details ) throws Exception {
+		return cdao.addNewOrderWithDetails(userId, pickupPlace, returnPlace,details);
+	}
 }

@@ -44,8 +44,7 @@
                           <tr>
                             <th style="width: 120px;">Ảnh</th>
                             <th>Thông tin xe</th>
-                            <th>Ngày nhận xe</th>
-                            <th>Ngày trả xe</th>
+                            <th style="width: 40%">Ngày nhận/trả xe</th>
                             <th>Giá / ngày</th>
                             <th style="width: 30px;">Thao tác</th>
                           </tr>
@@ -70,20 +69,31 @@
                                             </ul>
                                         </td>
                                         <td>
-                                        	<div class="input-group" id="timepickerstart" data-td-target-input="nearest" data-td-target-toggle="nearest">
-						                        <input type="text" class="form-control" placeholder="dd/MM/yyyy HH:mm" data-td-target="#timepickerstart" value="${item.pickupDate}" disabled />
+                                        <form action="Order" method="posts"> 
+                                        	<input hidden name="bikeToCartId" value="${item.bikeId}">
+                                        	<input hidden name="act" value="update">
+                                       		<div style="width: 100%">
+                                        		<p>Ngày nhận xe: </p>
+                                       		</div>
+                                        	<div class="input-group timepicker-start" id="timepickerstart" data-td-target-input="nearest" data-td-target-toggle="nearest">
+						                        <input type="text" class="form-control start-input" name="startDay" placeholder="dd/MM/yyyy HH:mm" data-td-target="#timepickerstart" value="${item.pickupDateFormatted}"/>
 						                        <span class="input-group-text" data-td-toggle="datetimepicker" data-td-target="#timepickerstart">
 						                          <i class="fa fa-calendar"></i>
 						                        </span>
 						                    </div>
-                                        </td>
-                                        <td>
-	                                        <div class="input-group" id="timepickerfinish" data-td-target-input="nearest" data-td-target-toggle="nearest">
-						                        <input type="text" class="form-control" placeholder="dd/MM/yyyy HH:mm" data-td-target="#timepickerfinish" value="${item.returnDate }" disabled/>
+					                        <div style="width: 100%">
+					                        	<p style="display: block">Ngày trả xe: </p>
+					                        </div>
+	                                        <div class="input-group timepicker-end" id="timepickerfinish" data-td-target-input="nearest" data-td-target-toggle="nearest">
+						                        <input type="text" class="form-control end-input" name="endDay" placeholder="dd/MM/yyyy HH:mm" data-td-target="#timepickerfinish" value="${item.returnDateFormatted }"/>
 						                        <span class="input-group-text" data-td-toggle="datetimepicker" data-td-target="#timepickerfinish">
 						                          <i class="fa fa-calendar"></i>
 						                        </span>
 						                     </div>
+						                     <div class="text-end" style="padding:8px 0">
+						                     	<button type="submit" class="btn btn-secondary">Sửa</button>
+						                     </div>
+                                        </form>
                                         </td>
                                         <td>${item.rentalFee} VND</td>
                                         <td>
@@ -112,36 +122,20 @@
                     <h3> Thông tin nhận xe</h3>
                     <hr style="border-color: #000;">
                 </div>
-                <form>
+                <form action="Order" method="posts">
+                	<input name="act" value="createOrder" hidden >
+                	<input name="userId" value="5">
                     <div class="mb-3">
                         <label for="user-name" class="form-label">Họ và tên</label>
                         <input type="text" disabled="disabled" class="form-control" id="user-name" placeholder="Nhập họ và tên">
                       </div>
                     <div class="mb-3">
                       <label for="address" class="form-label">Địa chỉ nhận xe</label>
-                      <input type="text" class="form-control" id="address"  placeholder="Nhập địa chỉ nhận xe">
+                      <input type="text" class="form-control" id="address" name="pickupPlace" placeholder="Nhập địa chỉ nhận xe">
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Số điện thoại</label>
-                      <input type="phone" class="form-control" id="exampleInputEmail1" placeholder="Nhập số điện thoại">
-                    </div>
-                    <div class="mb-3">
-                      <label for="timepickerstart" class="form-label">Ngày nhận xe:</label>
-                      <div class="input-group" id="timepickerstart" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        <input type="text" class="form-control" placeholder="dd/MM/yyyy HH:mm" data-td-target="#timepickerstart" />
-                        <span class="input-group-text" data-td-toggle="datetimepicker" data-td-target="#timepickerstart">
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="timepickerfinish" class="form-label">Ngày nhận xe:</label>
-                      <div class="input-group" id="timepickerfinish" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                        <input type="text" class="form-control" placeholder="dd/MM/yyyy HH:mm" data-td-target="#timepickerfinish" />
-                        <span class="input-group-text" data-td-toggle="datetimepicker" data-td-target="#timepickerfinish">
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </div>
+                      <input type="phone" class="form-control" id="exampleInputEmail1" name="returnPlace"  placeholder="Nhập số điện thoại">
                     </div>
                     
                     <div class="text-end">
@@ -172,8 +166,16 @@
             locale: 'vi'
           }
         };
-        new tempusDominus.TempusDominus(document.getElementById('timepickerstart'), commonOptions);
-        new tempusDominus.TempusDominus(document.getElementById('timepickerfinish'), commonOptions);
+
+        
+        
+        document.querySelectorAll('.timepicker-start').forEach(function (el) {
+            new tempusDominus.TempusDominus(el, commonOptions);
+          });
+
+          document.querySelectorAll('.timepicker-end').forEach(function (el) {
+            new tempusDominus.TempusDominus(el, commonOptions);
+          });
       });
     </script>
 

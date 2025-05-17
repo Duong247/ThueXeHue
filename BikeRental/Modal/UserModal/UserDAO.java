@@ -9,6 +9,7 @@ import BikeModal.Bike;
 import ketNoiModal.KetNoi;
 
 public class UserDAO {
+	//owner info
 	public User getUserInfoByBikeId(int id) throws Exception {
 		User userInf= new User();
 		KetNoi kn = new KetNoi();
@@ -34,4 +35,6 @@ public class UserDAO {
 		kn.cn.close();
 		return userInf;
 	}
+	
+	
 }

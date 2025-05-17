@@ -34,7 +34,7 @@
                     </ul>
                   </li>
                   <li class="nav-item nav-item-header">
-                    <a class="nav-link" href="Order">Giỏ hàng</a>
+                    <a class="nav-link" href="Order"><i class="fa-solid fa-cart-shopping"></i>Giỏ hàng</a>
                   </li>
 
                   <!-- <li class="nav-item nav-item-header"> -->
@@ -49,7 +49,6 @@
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                       </ul>
-                      
                     </div>
                     
                   <!-- </li> -->

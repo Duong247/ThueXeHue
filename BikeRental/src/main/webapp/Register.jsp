@@ -11,6 +11,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/3ecdd9878f.js" crossorigin="anonymous"></script>
     <title>Đăng ký</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+  	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  	<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+	  <script>
+		  $( function() {
+		    $( "#datepicker" ).datepicker();
+		  } );
+		  </script>
 </head>
 <body>
 <%@include file="_HeaderOnly.jsp" %>
@@ -21,33 +29,33 @@
 	            
 	            <h5>Chào mừng đến với HueBikeRent</h5>
 	        </div>
-	        <form>
+	        <form action="Register" method="post">
 	            <div class="mb-3">
-	                <label for="exampleInputEmail1" class="form-label">Email</label>
-	                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+	                <label for="exampleInputPassword1" class="form-label">Họ và tên</label>
+	                <input type="text" class="form-control" name="fullname" id="firstName">
 	            </div>
 	            <div class="mb-3">
-	                <label for="exampleInputPassword1" class="form-label">First name</label>
-	                <input type="text" class="form-control" name="firstName" id="firstName">
+	                <label for="exampleInputPassword1" class="form-label">Số điện thoại</label>
+	                <input type="tel" class="form-control" name="phone" id="phone">
 	            </div>
 	            <div class="mb-3">
-	                <label for="exampleInputPassword1" class="form-label">Last name</label>
-	                <input type="text" class="form-control" name="firstName" id="lastName">
+	                <label for="exampleInputPassword1" class="form-label">Ngày sinh</label>
+	                <input type="text" class="form-control" name="birthday" id="datepicker">
 	            </div>
 	            <div class="mb-3">
-	                <label for="exampleInputPassword1" class="form-label">Phone</label>
-	                <input type="tel" class="form-control" id="phone">
+	                <label for="exampleInputPassword1" class="form-label">Địa chỉ</label>
+	                <input type="tex" class="form-control" name="address">
+	                
 	            </div>
 	            <div class="mb-3">
-	                <label for="exampleInputPassword1" class="form-label">Password</label>
-	                <input type="text" class="form-control" id="password">
+	                <label for="exampleInputPassword1" class="form-label">Mật khẩu</label>
+	                <input type="text" class="form-control" name="password" id="password">
 	            </div>
 	            <div class="mb-3">
-	                <label for="exampleInputPassword1" class="form-label">Repeat Password</label>
-	                <input type="text" class="form-control" id="repeatPassword">
+	                <label for="exampleInputPassword1" class="form-label">Nhập lại mật khẩu</label>
+	                <input type="text" class="form-control" name="repeatPassword" id="repeatPassword">
 	            </div>
-	            
-	            <button type="submit" class="btn btn-primary" style="width: 100%;">Đăng nhập</button>
+	            <button type="submit" class="btn btn-primary"  style="width: 100%;">Đăng ký</button>
 	          </form>
 	    </div>
 	</div>

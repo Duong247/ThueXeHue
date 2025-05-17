@@ -113,3 +113,27 @@ and Status = 1
 select * from OrderDetail
 insert into OrderDetail(BikeId,RentalFee,PickupDate,ReturnDate)
 values(2,1000,'2025-05-15 22:24:00.0','2025-05-15 22:24:00.0')
+
+
+select * from [Order]
+
+ALTER TABLE [Order]
+ADD CONSTRAINT DF_Order_Status DEFAULT 0 FOR Status;
+
+ALTER TABLE [Order]
+ADD CONSTRAINT DF_Order_OrderDate DEFAULT GETDATE() FOR OrderDate;
+
+
+select * from [Order]
+select * from OrderDetail
+
+Insert into OrderDetail(BikeId,RentalFee,PickupDate,ReturnDate)
+values(?,?,?,?)
+
+Insert into [Order](OrderDetailId,UserId,PickupPlace,ReturnPlace)
+values(?,?,?,?)
+
+delete from OrderDetail
+where 1=1
+delete from [Order]
+where 1=1

@@ -2,6 +2,8 @@ package CartItemModal;
 
 
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class CartItem {
 	private int bikeId;
@@ -101,6 +103,18 @@ public class CartItem {
 	}
 	public void setReturnDate(Timestamp returnDate) {
 		this.returnDate = returnDate;
+	}
+	
+	public String getPickupDateFormatted() {
+	    if (pickupDate == null) return "";
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", new Locale("vi", "VN"));
+	    return pickupDate.toLocalDateTime().format(formatter);
+	}
+	
+	public String getReturnDateFormatted() {
+	    if (returnDate == null) return "";
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", new Locale("vi", "VN"));
+	    return returnDate.toLocalDateTime().format(formatter);
 	}
 	
 	
