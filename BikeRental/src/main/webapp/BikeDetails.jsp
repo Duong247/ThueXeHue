@@ -113,8 +113,9 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm vào đơn hàng</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      	<form action="Order" method="post">
+      	<form action="Order" method="posts">
       		<input name="bikeToCartId" hidden type="text" value="${getBike.bikeId}">
+      		<input name="act" hidden type="text" value="add">
 	      <div class="modal-body">
 	        <table class="table table-bordered">
 	           <thead class="table-light">

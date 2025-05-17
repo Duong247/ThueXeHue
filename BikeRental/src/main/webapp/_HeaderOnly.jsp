@@ -34,10 +34,9 @@
                     </ul>
                   </li>
                   <li class="nav-item nav-item-header">
-                    <a class="nav-link" href="#">Giới thiệu</a>
+                    <a class="nav-link" href="Order">Giỏ hàng</a>
                   </li>
-                 
-                 
+
                   <!-- <li class="nav-item nav-item-header"> -->
                     <div class="dropdown-center">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

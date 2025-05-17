@@ -111,3 +111,5 @@ where BikeLine =(
 and Status = 1
 
 select * from OrderDetail
+insert into OrderDetail(BikeId,RentalFee,PickupDate,ReturnDate)
+values(2,1000,'2025-05-15 22:24:00.0','2025-05-15 22:24:00.0')

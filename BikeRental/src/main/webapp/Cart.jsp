@@ -1,5 +1,9 @@
+<%@page import="BikeModal.BikeBo"%>
+<%@page import="CartItemModal.CartItem"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,16 +25,19 @@
 <body>
 <%// <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">%>
 <%@include file="_HeaderOnly.jsp"%>
+<% 
+	BikeBo bikeBo = new BikeBo();
+%>
 <div class="container" style="min-height: 614px;margin-top: 82px">
         <div class="row align-items-start g-4">
-            <div class="col-md-8 col-12" >
+            <div class="col-md-9 col-12" >
                 <div class="head-col text-left">
                     <h3> Đơn hàng của bạn</h3>
                     <hr style="border-color: #000;">
                 </div>
                 <div class="cart-content">
                     <div class="text-end" style="margin: 8px 0;">
-                        <button class="btn btn-danger">Xóa tất cả</button>
+                        <a class="btn btn-danger" href="Order?act=clear">Xóa tất cả</a>
                     </div>
                     <table class="table table-bordered">
                         <thead class="table-light">
@@ -44,47 +51,63 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr class="cart-item">
-                            <td> <img src="./assets/img/sh.png" alt="" class="cart-item-img"></td>
-                            <td>
-                                <ul>
-                                    <li><b>Tên xe:</b> Xe sh</li>
-                                    <li><b>Biển số:</b> 75-AF 01100</li>
-                                    <li><b>Màu xe:</b> Xám xi măng</li>
-                                </ul> 
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td>100.000đ /ngày</td>
-                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                          </tr>
-                          <tr class="cart-item">
-                            <td> <img src="./assets/img/sh.png" alt="" class="cart-item-img"></td>
-                            <td>
-                                <ul>
-                                    <li><b>Tên xe:</b> Xe sh</li>
-                                    <li><b>Biển số:</b> 75-AF 01100</li>
-                                    <li><b>Màu xe:</b> Xám xi măng</li>
-                                </ul> 
-                            </td>
-                            <td>
-                            	
-                      		</td>
-                            <td>
-                            	
-                            </td>
-                            <td>100.000đ</td>
-                            <td><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                          </tr>
+                        <c:choose>
+                        	<c:when test="${itemCartList==null || itemCartList.size()==0}">
+                        		<tr class="text-center"><td colspan="6">Giỏ hàng trống</td> </tr>
+                        	</c:when>
+                        	<c:otherwise>
+	                        	<c:forEach var="item" items="${itemCartList}">
+                                    <tr class="cart-item">
+                                        <td><img src="./assets/img/motobikes/${item.photo }" alt="" class="cart-item-img" style="width:100%; height:auto;"></td>
+                                        <td>
+                                            <ul style="padding-left: 5px">
+                                                <li><b>Tên xe:</b>${item.bikeName}</li>
+                                                <li><b>Màu xe:</b>${item.bikeName}</li>
+                                                <li><b>Loại xe:</b>${item.bikeLine}</li>
+                                                <li><b>Hãng xe:</b>${item.bikeManufactor}</li>
+                                                <li><b>Biển số:</b>${item.licensePlate}</li>
+                                                <li><b>Năm sản xuất:</b>${item.manufacturingYear}</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                        	<div class="input-group" id="timepickerstart" data-td-target-input="nearest" data-td-target-toggle="nearest">
+						                        <input type="text" class="form-control" placeholder="dd/MM/yyyy HH:mm" data-td-target="#timepickerstart" value="${item.pickupDate}" disabled />
+						                        <span class="input-group-text" data-td-toggle="datetimepicker" data-td-target="#timepickerstart">
+						                          <i class="fa fa-calendar"></i>
+						                        </span>
+						                    </div>
+                                        </td>
+                                        <td>
+	                                        <div class="input-group" id="timepickerfinish" data-td-target-input="nearest" data-td-target-toggle="nearest">
+						                        <input type="text" class="form-control" placeholder="dd/MM/yyyy HH:mm" data-td-target="#timepickerfinish" value="${item.returnDate }" disabled/>
+						                        <span class="input-group-text" data-td-toggle="datetimepicker" data-td-target="#timepickerfinish">
+						                          <i class="fa fa-calendar"></i>
+						                        </span>
+						                     </div>
+                                        </td>
+                                        <td>${item.rentalFee} VND</td>
+                                        <td>
+                                            <form method="post" action="Order">
+                                                <input type="hidden" name="bikeToCartId" value="${item.bikeId}">
+                                                <input type="hidden" name="act" value="delete">
+                                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                        	</c:otherwise>
+                        </c:choose>
                           
+             
+                          
+                          
+
                         </tbody> 
                       </table>
                       
                 </div>
             </div>
-            <div class="col-md-4 col-12" >
+            <div class="col-md-3 col-12" >
                 <div class="head-col text-left">
                     <h3> Thông tin nhận xe</h3>
                     <hr style="border-color: #000;">
