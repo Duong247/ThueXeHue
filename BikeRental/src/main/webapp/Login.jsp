@@ -18,21 +18,22 @@
       <div class="">
         <h4 style="margin-bottom: 30px; text-align: center; font-weight:600 ">Đăng nhập</h4>
         <div style="height: 60px;">
-          <div class="alert alert-danger" hidden  role="alert">
-            <i class="fa-solid fa-circle-exclamation" style="margin-right: 5px"></i>Thông tin đăng nhập không đúng
+          <div class="alert alert-danger" ${ErrStr==null||ErrStr==''?'hidden':'' }  role="alert">
+            <i class="fa-solid fa-circle-exclamation" style="margin-right: 5px"></i>${ErrStr!=null?ErrStr:''}
           </div>
         </div>
-        <form>
+        <form action="Login" method="post">
           <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Email</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <label for="phone" class="form-label">Số điện thoại</label>
+              <input type="phone" name="phone" class="form-control" id="phone" aria-describedby="emailHelp" value="${phone }" autofocus="autofocus">
+              <span style="color:red;">${rppwErr}</span>
           </div>
           <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">Mật khẩu</label>
-              <input type="password" class="form-control" id="exampleInputPassword1">
+              <input type="password" name="pass" class="form-control" value="${pass }" id="exampleInputPassword1">
           </div>
-          <a href="./Register.html" style="display: block;margin: 10px;">Đăng ký?</a>
-          <button type="submit" class="btn btn-primary" style="width: 100%;">Đăng nhập</button>
+          <a href="Register" style="display: block;margin: 10px;">Đăng ký?</a>
+          <button type="submit" name="act" value=submit" class="btn btn-primary" style="width: 100%;">Đăng nhập</button>
         </form>
       </div>
     </div>

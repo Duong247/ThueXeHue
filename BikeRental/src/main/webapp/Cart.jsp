@@ -31,10 +31,11 @@
 <div class="container" style="min-height: 614px;margin-top: 82px">
         <div class="row align-items-start g-4">
             <div class="col-md-9 col-12" >
-                <div class="head-col text-left">
+                <div class="head-col text-left d-flex justify-content-between" style="margin-bottom: 0">
                     <h3> Đơn hàng của bạn</h3>
-                    <hr style="border-color: #000;">
+                    <a href="OrderHistory" style="padding: 5px; text-decoration: none"><i class="fa-solid fa-clock-rotate-left" style="padding: 5px"></i>Lịch sử mua hàng</a>
                 </div>
+                <hr style="border-color: #000;">
                 <div class="cart-content">
                     <div class="text-end" style="margin: 8px 0;">
                         <a class="btn btn-danger" href="Order?act=clear">Xóa tất cả</a>

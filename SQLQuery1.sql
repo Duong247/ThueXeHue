@@ -137,3 +137,92 @@ delete from OrderDetail
 where 1=1
 delete from [Order]
 where 1=1
+
+select * from [User]
+
+insert into [User](UserName, Phone,Password,DateOfBirth,role,Address)
+values(?,?,?,?,?,?)
+
+select * from [User]
+where Phone='0123456789' and Password='Dignissimos harum si';
+
+
+select *from [user]
+
+select *from [Order]
+where UserId = 5
+select *from [OrderDetail]
+
+
+SELECT 
+    o.OrderId,
+    o.OrderDate,
+    o.PickupPlace,
+    o.ReturnPlace,
+    o.Status,
+    od.OrderDetailId,
+    od.BikeId,
+    od.RentalFee,
+    od.PickupDate,
+    od.ReturnDate
+FROM [Order] o
+JOIN OrderDetail od ON o.OrderId = od.OrderId
+WHERE o.UserId = 5
+ORDER BY o.OrderDate DESC, od.OrderDetailId ASC;
+
+
+SELECT 
+    o.OrderId,
+    o.OrderDate,
+    o.PickupPlace,
+    o.ReturnPlace,
+    od.BikeId,
+    b.BikeName,
+    b.LicensePlate,
+    b.ManufacturingYear,
+    b.BikeLine,
+    b.BikeManufactor,
+    bp.Photo, -- lấy ảnh
+    b.Description,
+    od.RentalFee,
+    od.PickupDate,
+    od.ReturnDate,
+	o.Status
+FROM [Order] o
+JOIN OrderDetail od ON o.OrderId = od.OrderDetailId
+JOIN Bike b ON od.BikeId = b.BikeId
+LEFT JOIN BikePhoto bp ON bp.BikeId = b.BikeId AND bp.Priority = (
+    SELECT MIN(Priority)
+    FROM BikePhoto
+    WHERE BikeId = b.BikeId
+)
+WHERE o.UserId = 5
+ORDER BY o.OrderDate DESC
+
+select * from OrderDetail
+
+
+
+
+
+SELECT o.OrderId, o.OrderDate, o.PickupPlace, o.ReturnPlace, o.Status, 
+	            od.BikeId, b.BikeName, b.LicensePlate, b.ManufacturingYear, b.BikeLine, b.BikeManufactor,  
+	            bp.Photo, b.Description, od.RentalFee, od.PickupDate, od.ReturnDate  
+	            FROM [Order] o  
+	            JOIN OrderDetail od ON o.OrderId = od.OrderId  
+	            JOIN Bike b ON od.BikeId = b.BikeId  
+	            LEFT JOIN BikePhoto bp ON bp.BikeId = b.BikeId AND bp.Priority = (  
+	                SELECT MIN(Priority) FROM BikePhoto WHERE BikeId = b.BikeId )  
+	            WHERE o.UserId = 5
+	            ORDER BY o.OrderDate DESC
+
+select* from BikePhoto
+
+select * from or
+
+
+select * from [User]
+
+update [User]
+set UserName=?,Phone=?,DateOfBirth=?,Photo,Address=?
+where UserId=?

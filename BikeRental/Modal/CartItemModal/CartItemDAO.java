@@ -125,5 +125,58 @@ public class CartItemDAO {
 		        if (conn != null) conn.close();
 		    }
 		}
+	
+	public ArrayList<CartItem> getOrderHistoryByUserId(int userId) throws Exception {
+	    ArrayList<CartItem> list = new ArrayList<CartItem>();
+	    KetNoi kn = new KetNoi();
+	    kn.ketnoi();
+	    String sql = "SELECT \r\n"
+	    		+ "    o.OrderId,\r\n"
+	    		+ "    o.OrderDate,\r\n"
+	    		+ "    o.PickupPlace,\r\n"
+	    		+ "    o.ReturnPlace,\r\n"
+	    		+ "    od.BikeId,\r\n"
+	    		+ "    b.BikeName,\r\n"
+	    		+ "    b.LicensePlate,\r\n"
+	    		+ "    b.ManufacturingYear,\r\n"
+	    		+ "    b.BikeLine,\r\n"
+	    		+ "    b.BikeManufactor,\r\n"
+	    		+ "    bp.Photo, -- lấy ảnh\r\n"
+	    		+ "    b.Description,\r\n"
+	    		+ "    od.RentalFee,\r\n"
+	    		+ "    od.PickupDate,\r\n"
+	    		+ "    od.ReturnDate\r\n"
+	    		+ "FROM [Order] o\r\n"
+	    		+ "JOIN OrderDetail od ON o.OrderId = od.OrderDetailId\r\n"
+	    		+ "JOIN Bike b ON od.BikeId = b.BikeId\r\n"
+	    		+ "LEFT JOIN BikePhoto bp ON bp.BikeId = b.BikeId AND bp.Priority = (\r\n"
+	    		+ "    SELECT MIN(Priority)\r\n"
+	    		+ "    FROM BikePhoto\r\n"
+	    		+ "    WHERE BikeId = b.BikeId\r\n"
+	    		+ ")\r\n"
+	    		+ "WHERE o.UserId = ?\r\n"
+	    		+ "ORDER BY o.OrderDate DESC";
+	    
+	    PreparedStatement ps = kn.cn.prepareStatement(sql);
+	    ps.setInt(1, userId);
+	    ResultSet rs = ps.executeQuery();
+	    while (rs.next()) {
+	        CartItem item = new CartItem();
+	        item.setBikeId(rs.getInt("BikeId"));
+	        item.setBikeName(rs.getString("BikeName"));
+	        item.setLicensePlate(rs.getString("LicensePlate"));
+	        item.setManufacturingYear(rs.getInt("ManufacturingYear"));
+	        item.setBikeLine(rs.getString("BikeLine"));
+	        item.setBikeManufactor(rs.getString("BikeManufactor"));
+	        item.setPhoto(rs.getString("Photo"));
+	        item.setDescription(rs.getString("Description"));
+	        item.setRentalFee(rs.getLong("RentalFee"));
+	        item.setPickupDate(rs.getTimestamp("PickupDate"));
+	        item.setReturnDate(rs.getTimestamp("ReturnDate"));
+	        list.add(item);
+	    }
+	    rs.close(); ps.close(); kn.cn.close();
+	    return list;
+	}
 
 }

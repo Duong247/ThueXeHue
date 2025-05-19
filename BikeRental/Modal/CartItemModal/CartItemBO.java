@@ -1,10 +1,12 @@
 package CartItemModal;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class CartItemBO {
 	CartItemDAO cdao= new CartItemDAO();
@@ -37,5 +39,14 @@ public class CartItemBO {
 	}
 	public boolean createOrder2(int userId, String pickupPlace, String returnPlace,ArrayList<CartItem> details ) throws Exception {
 		return cdao.addNewOrderWithDetails(userId, pickupPlace, returnPlace,details);
+	}
+	
+	public ArrayList<CartItem>getOrderHistoryByUserId(int userId) throws Exception{
+		return cdao.getOrderHistoryByUserId(userId);
+	}
+	
+	public long getRentalDays(Timestamp returnDate,Timestamp pickupDate) {
+	    long millis = returnDate.getTime() - pickupDate.getTime();
+	    return TimeUnit.DAYS.convert(millis, TimeUnit.MILLISECONDS);
 	}
 }

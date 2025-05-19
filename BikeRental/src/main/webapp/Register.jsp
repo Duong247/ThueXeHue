@@ -26,36 +26,41 @@
 		<div class="form-login-container register-form-container">
 	        <div class="logo-login-form logo-register-form text-center">
 	            <img src="./assets/img/icon2.png" alt="" class="logo-login" style="width: 80px">
-	            
 	            <h5>Chào mừng đến với HueBikeRent</h5>
 	        </div>
 	        <form action="Register" method="post">
 	            <div class="mb-3">
 	                <label for="exampleInputPassword1" class="form-label">Họ và tên</label>
-	                <input type="text" class="form-control" name="fullname" id="firstName">
+	                <input type="text" class="form-control" name="fullname" id="firstName" value="${fullname }">
+	                <span style="color:red;">${nameErr}</span>
 	            </div>
 	            <div class="mb-3">
 	                <label for="exampleInputPassword1" class="form-label">Số điện thoại</label>
-	                <input type="tel" class="form-control" name="phone" id="phone">
+	                <input type="tel" class="form-control" name="phone" id="phone" value="${phone }">
+	                <span style="color:red;">${phoneErr}</span>
 	            </div>
 	            <div class="mb-3">
 	                <label for="exampleInputPassword1" class="form-label">Ngày sinh</label>
-	                <input type="text" class="form-control" name="birthday" id="datepicker">
+	                <input type="text" class="form-control" name="birthday" id="datepicker" value="${birthday }">
+	                <span style="color:red;">${bdErr}</span>
 	            </div>
 	            <div class="mb-3">
 	                <label for="exampleInputPassword1" class="form-label">Địa chỉ</label>
-	                <input type="tex" class="form-control" name="address">
+	                <input type="tex" class="form-control" name="address" value="${address}">
+	                <span style="color:red;">${addressErr}</span>
 	                
 	            </div>
 	            <div class="mb-3">
 	                <label for="exampleInputPassword1" class="form-label">Mật khẩu</label>
-	                <input type="text" class="form-control" name="password" id="password">
+	                <input type="text" class="form-control" name="password" id="password" value="${password}">
+	                <span style="color:red;">${pwErr}</span>
 	            </div>
 	            <div class="mb-3">
 	                <label for="exampleInputPassword1" class="form-label">Nhập lại mật khẩu</label>
-	                <input type="text" class="form-control" name="repeatPassword" id="repeatPassword">
+	                <input type="text" class="form-control" name="repeatPassword" id="repeatPassword" value="${repeatPassword}">
+	                <span style="color:red;">${rppwErr}</span>
 	            </div>
-	            <button type="submit" class="btn btn-primary"  style="width: 100%;">Đăng ký</button>
+	            <button type="submit" class="btn btn-primary" name="act"  style="width: 100%;" Value="submit">Đăng ký</button>
 	          </form>
 	    </div>
 	</div>

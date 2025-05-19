@@ -46,7 +46,6 @@ public class OrderCotroler extends HttpServlet {
     	request.setCharacterEncoding("UTF-8");
     	response.setContentType("text/html; charset=UTF-8");
     	response.setCharacterEncoding("UTF-8");
-    	
     	boolean editmode = false;
     	request.setAttribute("editmode", editmode);
     	
@@ -110,6 +109,7 @@ public class OrderCotroler extends HttpServlet {
 				request.setAttribute("BikePhoto", BikePhoto);
 				Bike bike = bikeBo.getBikeById(Integer.parseInt(bikeToCartId));
 				ArrayList<String> bikePhotoInCart = bikeBo.getPhotoByBikeId(Integer.parseInt(bikeToCartId));
+				//TODO set default img
 				String photo = bikePhotoInCart.isEmpty() ? "default.jpg" : bikePhotoInCart.get(0);
 				CartItem cartItem = new CartItem(bike.getBikeId(),bike.getBikeName(),bike.getLicensePlate(),bike.getManufacturingYear(),bike.getBikeLine(),bike.getBikeManufactor(),photo,bike.getDescription(),bike.getPrice(),startDay,endDay);
 				if(!cbo.checkExists(cartItemList, cartItem)) {

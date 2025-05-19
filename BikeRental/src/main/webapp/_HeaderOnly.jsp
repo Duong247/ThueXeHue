@@ -44,10 +44,10 @@
                       <img src="./assets/img/daiNoi.jpg" class=" mini-ava" style="display: inline-block;">
                     </a>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="ChangeInfoController">Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="#">Quản lý</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
                       </ul>
                     </div>
                     
