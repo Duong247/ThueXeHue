@@ -39,7 +39,8 @@ public class UserBO {
     }
     
     public User getUserLoginInfo(String phone,String pass) throws Exception {
-		return userDao.getUserloginInf(phone, pass);
+    	String HashPassword = hashPassword(pass);
+		return userDao.getUserloginInf(phone, HashPassword);
 	}
     public User getUserById(int userId) throws Exception {
 		return userDao.getUserById(userId);
@@ -51,7 +52,6 @@ public class UserBO {
     
     public boolean checkOldPass(int userId, String pass) throws Exception {
     	String HashPassword = hashPassword(pass);
-    	System.out.println(HashPassword);
     	return userDao.checkOldPass(userId, HashPassword);
     }
     

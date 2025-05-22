@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import UserModal.User;
 import UserModal.UserBO;
 
 /**
@@ -36,6 +37,11 @@ public class LoginController extends HttpServlet {
     	response.setContentType("text/html; charset=UTF-8");
     	response.setCharacterEncoding("UTF-8");
     	HttpSession session = request.getSession();
+    	User currentUser = (User) session.getAttribute("currentUserInf");
+		if(currentUser!=null) {
+    		response.sendRedirect("Home");
+    		return;
+    	}
     	try {
     		UserBO uBO = new UserBO();
     		String phone = request.getParameter("phone");

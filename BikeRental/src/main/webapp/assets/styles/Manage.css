@@ -20,13 +20,13 @@
 .btn-list > li{
 	display:block;
 	width: 100%;	
-	padding: 15px 2px;
 }
 
 li >a{
 	text-decoration: none ;
 	color: #fff;
-	padding: 0 5px ;
+	padding: 25px ;
+	display: block;
 
 }
 

@@ -10,27 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
+import BikeModal.Bike;
 import BikeModal.BikeBo;
-import CartItemModal.CartItem;
-import CartItemModal.CartItemBO;
-import CartItemModal.CartItemDAO;
-import OrderModal.Order;
-import OrderModal.OrderBo;
 import UserModal.User;
 
 /**
- * Servlet implementation class OrderHistoryController
+ * Servlet implementation class OwnerManagermentCotroller
  */
-@WebServlet("/OrderHistory")
-public class OrderHistoryController extends HttpServlet {
+@WebServlet("/OwnerManagerment")
+public class OwnerManagermentCotroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderHistoryController() {
+    public OwnerManagermentCotroller() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,35 +37,29 @@ public class OrderHistoryController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
     	response.setContentType("text/html; charset=UTF-8");
     	response.setCharacterEncoding("UTF-8");
-		CartItemBO cBO = new CartItemBO();
-		OrderBo OBO = new OrderBo();
-		HttpSession session = request.getSession();
-		User currentUser = (User) session.getAttribute("currentUserInf");
-		if(currentUser==null) {
-    		response.sendRedirect("Login");
-    		return;
-    	}
-
-		
-		ArrayList<Order> history;
-		try {
-	    	
-//			TODO set currentUserID for history
-			history = OBO.getOrderHistoryByUserId(currentUser.getUserId());
-//			history = OBO.getOrderHistoryByUserId(5);
-	    	CartItemBO cbo = new CartItemBO();
-	    	BikeBo bBO = new BikeBo();
-	    	request.setAttribute("bBO", bBO);
-	    	request.setAttribute("cbo",cbo);
-			request.setAttribute("orderHistory", history);
-
+    	HttpSession session = request.getSession();
+    	User currentUser = (User) session.getAttribute("currentUserInf");
+    	BikeBo bBO = new BikeBo();
+    	
+    	try {
+    		String p= request.getParameter("p");
+    		request.setAttribute("p", p);
+    		if(p!=null) {
+    			if(p.equals("bike")) {
+    				ArrayList<Bike> OwnerBikes = bBO.getOwnerBike(currentUser.getUserId());
+    				request.setAttribute("OwnerBikes", OwnerBikes);
+    				request.setAttribute("listManufactor", bBO.getBikeManufactor());
+    			}
+    		}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// TODO: handle exception
 		}
-		RequestDispatcher rq = request.getRequestDispatcher("orderHistory.jsp");
+		
+		
+		
+		
+	    RequestDispatcher rq = request.getRequestDispatcher("Dashboard.jsp");
 	    rq.forward(request, response);
-
 	}
 
 	/**

@@ -25,11 +25,11 @@
                     <a href="Order" style="padding: 5px; text-decoration: none"><i class="fa-solid fa-arrow-left" style="padding: 5px"></i>Quay lại giỏ hàng</a>
                 </div>
                 <hr style="border-color: #000;">
+                <div class="text-center" ${orderHistory!=null?'hidden':''}>
+					Bạn chưa có đơn hàng nào, <a href="BikeDetail">Thuê xe ngay</a>
+				</div>
                 <div class="cart-content">
 					<div class="cover">
-						<div class="text-center" ${orderHistory!=null?'hidden':''}>
-							Bạn chưa có đơn hàng nào, <a href="BikeDetail">Thuê xe ngay</a>
-						</div>
 						<c:forEach var="order" items="${orderHistory}">
 				            <div class="card order-card">
 				                <div class="card-head">
@@ -45,6 +45,7 @@
 				                <div class="card-body-order">
 				                    <table class="table">
 				                        <tbody>
+											
 				                            <c:forEach var="item" items="${order.items}" varStatus="loop">
 				                                <tr>
 				                                    <th scope="row" style="max-width: 40px">${loop.index + 1}</th>

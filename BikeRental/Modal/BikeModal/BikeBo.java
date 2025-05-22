@@ -36,5 +36,22 @@ public class BikeBo {
 		return bikeDao.getBikeSimilar(id);
 	}
 	
+	public ArrayList<Bike> getOwnerBike(int id) throws Exception{
+		return bikeDao.getOwnerBike(id);
+	}
+	
+	public ArrayList<String> getBikePhoto(int id) throws Exception{
+		return bikeDao.getBikePhoto(id);
+	}
+	
+	public boolean addBikeWithPhotos(Bike bike,int userId, ArrayList<String> photo) throws Exception {
+		return bikeDao.addBikeWithPhotos(bike, userId, photo);
+	}
+	
+	public ArrayList<String> getBikeManufactor() throws Exception{
+		return bikeDao.getBikeManufactor();
+	}
+	
+	
 	
 }

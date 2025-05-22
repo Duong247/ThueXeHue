@@ -223,6 +223,27 @@ select * from or
 
 select * from [User]
 
-update [User]
+update [User]	
 set UserName=?,Phone=?,DateOfBirth=?,Photo,Address=?
 where UserId=?
+
+select * from [User]
+where UserId = ?
+
+update [User]
+set Password='8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92'
+where UserId = 5
+
+select * from [User]
+where Phone=0923456789  and Password='03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4'
+
+SELECT * FROM [User] WHERE UserId = 5 AND Password = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92'
+
+select b.BikeId,BikeName,LicensePlate,ManufacturingYear,BikeLine,BikeManufactor,Description,Price,Status,CreatedTime ,
+(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo
+from [User] left join Bike as b on [User].UserId = b.OwnerId
+where [User].UserId = 5
+
+select * from BikePhoto
+
+select * from Bike

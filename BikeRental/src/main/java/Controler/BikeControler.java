@@ -8,10 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.connector.Request;
 
 import BikeModal.BikeBo;
+import UserModal.User;
 
 /**
  * Servlet implementation class BikeControler
@@ -37,6 +39,13 @@ public class BikeControler extends HttpServlet {
 	    	request.setCharacterEncoding("UTF-8");
 	    	response.setContentType("text/html; charset=UTF-8");
 	    	response.setCharacterEncoding("UTF-8");
+			HttpSession session = request.getSession();
+			User currentUser = (User) session.getAttribute("currentUserInf");
+	    	if(currentUser==null) {
+	    		response.sendRedirect("Login");
+	    		return;
+	    	}
+			
 	    	BikeBo bikebo = new BikeBo();
 	    	int pageNum =1;
 	    	String p = request.getParameter("p");

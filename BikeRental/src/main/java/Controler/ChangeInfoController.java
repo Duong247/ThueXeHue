@@ -44,11 +44,16 @@ public class ChangeInfoController extends HttpServlet {
 		try {
 			UserBO uBO = new UserBO();
 			HttpSession session = request.getSession();
-//			User currentUser = (User) session.getAttribute("currentUserInf");
-//			int userId = currentUser.getUserId();
-//			request.setAttribute("user", uBO.getUserById(userId));
+			User currentUser = (User) session.getAttribute("currentUserInf");
+			
+			if(currentUser==null) {
+	    		response.sendRedirect("Login");
+	    		return;
+	    	}
+			int userId = currentUser.getUserId();
+			request.setAttribute("user", uBO.getUserById(userId));
 			//TODO set current Id
-			request.setAttribute("user", uBO.getUserById(5));
+//			request.setAttribute("user", uBO.getUserById(5));
 			
 			String act = request.getParameter("act");
 			if(act!=null  && act.contentEquals("changePass")) {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,9 +22,9 @@
 	  <button id="toggle-btn" class="btn btn-sm btn-light mb-2">☰</button>
 	  <div class="btn-group-cover" >
 	    <ul class="btn-list">
-	      <li><a href="#"><i class="fa-solid fa-gauge"></i><span class="sidebar-content">Dashboard</span></a>  </li>
-	      <li><a href="#"><i class="fa-solid fa-motorcycle"></i><span class="sidebar-content">Xe của tôi</span></a>  </li>
-	      <li><a href="#"><i class="fa-solid fa-clipboard-list"></i><span class="sidebar-content"> Quản lí đơn hàng</span></a>  </li>
+	      <li><a href="OwnerManagerment?p=main"><i class="fa-solid fa-gauge"></i><span class="sidebar-content">Dashboard</span></a>  </li>
+	      <li><a href="OwnerManagerment?p=bike"><i class="fa-solid fa-motorcycle"></i><span class="sidebar-content">Xe của tôi</span></a>  </li>
+	      <li><a href="OwnerManagerment?p=order"><i class="fa-solid fa-clipboard-list"></i><span class="sidebar-content"> Quản lí đơn hàng</span></a>  </li>
 	      <li></li>
 	      <li></li>
 	    </ul>
@@ -32,8 +33,19 @@
 	</div>
 	 
 	<div id="main-content" class="bg-light p-4 content-scale" style="min-height: 85vh" >
+		<c:choose>
+			<c:when test="${p!=null && p.equals('order') }">
+				<%@include file="OrderManagerment.jsp" %>
+			</c:when>
+			<c:when test="${p!=null && p.equals('bike') }">
+				<%@include file="BikesManagerment.jsp" %>
+			</c:when>
+			<c:otherwise>
+				<%@include file="DashboardContent.jsp" %>			
+			</c:otherwise>
+		</c:choose>
 	  
-	  <%@include file="OrderManagerment.jsp" %>
+	  
 	</div>
 
 </div>
@@ -44,12 +56,66 @@
   </div>
 </div>
 
+
+
+<c:if test="${hasErr}">
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        var exampleModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        exampleModal.show();
+    });
+</script>
+</c:if>
+
+
 <script>
   document.getElementById('toggle-btn').addEventListener('click', () => {
     document.getElementById('sidebar').classList.toggle('collapsed');
     document.getElementById('main-content').classList.toggle('content-scale');
     document.getElementById('footer').classList.toggle('content-scale');
   });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#uploadForm').submit(function (e) {
+        e.preventDefault(); // Ngăn không cho form reload
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: 'UploadBikeImgController',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function () {
+                // Gọi lại phần danh sách ảnh đã upload (AJAX render lại phần đó)
+                $('#uploadedAvatarsContainer').load(location.href + " #uploadedAvatarsContainer>*", "");
+            },
+            error: function () {
+                alert("Lỗi khi upload ảnh");
+            }
+        });
+    });
+    $('#uploadedAvatarsContainer').on('submit', '.remove-image-form', function (e) {
+        e.preventDefault();  // Ngăn submit form reload trang
+
+        var $form = $(this);
+        $.ajax({
+            url: $form.attr('action'),
+            type: 'POST',
+            data: $form.serialize(), // gửi index để xóa
+            success: function () {
+                // Reload lại phần ảnh đã upload sau khi xóa
+            	$('#uploadedAvatarsContainer').load(location.href + " #uploadedAvatarsContainer>*", "");
+            },
+            error: function () {
+                alert('Xóa ảnh thất bại, vui lòng thử lại.');
+            }
+        });
+    });
+});
 </script>
 
 

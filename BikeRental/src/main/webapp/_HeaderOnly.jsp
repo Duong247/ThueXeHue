@@ -21,7 +21,7 @@
                   <li class="nav-item nav-item-header">
                     <a class="nav-link " aria-current="page" href="BikeControler">Thuê Xe</a>
                   </li>
-                  <li class="nav-item nav-item-header dropdown">
+                  <li ${currentUserInf==null?'hidden':'' } class="nav-item nav-item-header dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                       aria-expanded="false">
                       Blog
@@ -33,21 +33,24 @@
                       <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                   </li>
-                  <li class="nav-item nav-item-header">
+                  <li ${currentUserInf==null?'hidden':'' } class="nav-item nav-item-header">
                     <a class="nav-link" href="Order"><i class="fa-solid fa-cart-shopping"></i>Giỏ hàng</a>
+                  </li>
+                  <li ${currentUserInf!=null?'hidden':'' }  class="nav-item nav-item-header">
+                    <a class="nav-link" href="Login">Đăng nhập/Đăng ký</a>
                   </li>
 
                   <!-- <li class="nav-item nav-item-header"> -->
-                    <div class="dropdown-center">
+                    <div ${currentUserInf==null?'hidden':'' } class="dropdown-center">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      <img src="./assets/img/daiNoi.jpg" class=" mini-ava" style="display: inline-block;">
+                      <img src="${currentUserInf.getPhoto()!=null?currentUserInf.getPhoto():'assets/img/avaUsers/noava.jpg' }" class=" mini-ava" style="display: inline-block;">
                     </a>
                       <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="ChangeInfoController">Thông tin cá nhân</a></li>
-                        <li><a class="dropdown-item" href="#">Quản lý</a></li>
+                        <li><a class="dropdown-item" href="OwnerManagerment" ${currentUserInf==null||currentUserInf.getRole()==1?'hidden':'' }>Quản lý</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="Logout">Đăng xuất</a></li>
                       </ul>
                     </div>
                     

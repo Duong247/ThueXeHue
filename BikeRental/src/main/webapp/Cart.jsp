@@ -125,10 +125,10 @@
                 </div>
                 <form action="Order" method="posts">
                 	<input name="act" value="createOrder" hidden >
-                	<input name="userId" value="5">
+                	<input name="userId" value="${currentUserInf.getUserId() }" hidden>
                     <div class="mb-3">
                         <label for="user-name" class="form-label">Họ và tên</label>
-                        <input type="text" disabled="disabled" class="form-control" id="user-name" placeholder="Nhập họ và tên">
+                        <input type="text" disabled="disabled" class="form-control" id="user-name" value="${currentUserInf.getUserName() }" placeholder="Nhập họ và tên">
                       </div>
                     <div class="mb-3">
                       <label for="address" class="form-label">Địa chỉ nhận xe</label>
@@ -136,7 +136,7 @@
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Số điện thoại</label>
-                      <input type="phone" class="form-control" id="exampleInputEmail1" name="returnPlace"  placeholder="Nhập số điện thoại">
+                      <input type="phone" class="form-control" id="exampleInputEmail1" name="returnPlace"  placeholder="Nhập số điện thoại" value="${currentUserInf.getPhone() }">
                     </div>
                     
                     <div class="text-end">

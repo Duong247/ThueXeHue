@@ -22,6 +22,7 @@ import BikeModal.Bike;
 import BikeModal.BikeBo;
 import CartItemModal.CartItem;
 import CartItemModal.CartItemBO;
+import UserModal.User;
 
 /**
  * Servlet implementation class OrderCotroler
@@ -58,6 +59,12 @@ public class OrderCotroler extends HttpServlet {
     	String currentUserId = request.getParameter("userId") ;
     	String act = request.getParameter("act");
     	ArrayList<CartItem> cartItemList = (ArrayList<CartItem>) session.getAttribute("itemCartList");
+    	
+		User currentUser = (User) session.getAttribute("currentUserInf");
+		if(currentUser==null) {
+    		response.sendRedirect("Login");
+    		return;
+    	}
     	if (cartItemList == null) {
     	    cartItemList = new ArrayList<CartItem>();
     	}
