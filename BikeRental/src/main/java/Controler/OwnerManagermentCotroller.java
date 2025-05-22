@@ -40,7 +40,9 @@ public class OwnerManagermentCotroller extends HttpServlet {
     	HttpSession session = request.getSession();
     	User currentUser = (User) session.getAttribute("currentUserInf");
     	BikeBo bBO = new BikeBo();
-    	
+    	String act = (String) request.getAttribute("act");
+    	request.setAttribute("act", act);
+    	Bike bikeInf = (Bike) request.getAttribute("bikeInf");
     	try {
     		String p= request.getParameter("p");
     		request.setAttribute("p", p);
@@ -49,13 +51,13 @@ public class OwnerManagermentCotroller extends HttpServlet {
     				ArrayList<Bike> OwnerBikes = bBO.getOwnerBike(currentUser.getUserId());
     				request.setAttribute("OwnerBikes", OwnerBikes);
     				request.setAttribute("listManufactor", bBO.getBikeManufactor());
+    				request.setAttribute(p, OwnerBikes);
+    				request.setAttribute("bikeInf", bikeInf);
     			}
     		}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		
 		
 		
 	    RequestDispatcher rq = request.getRequestDispatcher("Dashboard.jsp");

@@ -76,6 +76,16 @@
   });
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<c:if test="${act == 'update'}">
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        modal.show();
+    });
+</script>
+</c:if>
+
 <script>
 $(document).ready(function () {
     $('#uploadForm').submit(function (e) {

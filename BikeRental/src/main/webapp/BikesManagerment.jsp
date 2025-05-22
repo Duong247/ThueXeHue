@@ -20,7 +20,7 @@
 						</div>
 					</div>
 					<div class="d-grid gap-2 d-md-block text-center" style="border-top:1px #ccc solid; padding: 5px">
-					  <button class="btn btn-primary" type="button"><i class="fa-solid fa-pencil"></i></button>
+					  <a class="btn btn-primary" href="UpdateBikeController?id=${bike.getBikeId() }" type="button"><i class="fa-solid fa-pencil"></i></a>
 					  <button class="btn btn-danger" type="button"><i class="fa-solid fa-trash"></i></button>
 					</div>
 				</div>
@@ -57,53 +57,55 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="BikeSubmit" method="post">
+        <form action="BikeSubmit"  method="post">
         	<div class="mb-3">
 		    	<label for="bikeName" class="form-label">Tên xe:</label>
-		    	<input type="text" class="form-control" name="bikeName" id="bikeName" placeholder="Ví dụ: Honda Air Blade,...">
+		    	<input type="text" class="form-control" name="bikeName" id="bikeName" placeholder="Ví dụ: Honda Air Blade,..." value="${bikeInf.getBikeName() }">
 		    	<span style="color: red">${nameErr}</span>
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="licensePlate" class="form-label">Biển số:</label>
-		    	<input type="text" class="form-control" name="licensePlate" id="licensePlate" placeholder="Ví dụ: 75AF-011.00,...">
+		    	<input type="text" class="form-control" name="licensePlate" id="licensePlate" placeholder="Ví dụ: 75AF-011.00,..." value="${bikeInf.getLicensePlate() }">
 		    	<span style="color: red">${licensePlateErr}</span>
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="manufacturingYear" class="form-label">Năm sản xuất:</label>
-		    	<input type="number" class="form-control" id="manufacturingYear" name="manufacturingYear">
+		    	<input type="number" class="form-control" id="manufacturingYear" name="manufacturingYear" value="${bikeInf.getManufacturingYear() }">
 		    	<span style="color: red">${yearErr}</span>
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="bikeLine" class="form-label">Dòng xe:</label>
-		    	<select class="form-control" id="bikeLine" name="bikeLine">
+		    	<select class="form-control" id="bikeLine" name="bikeLine" ">
 		    		<option>Chọn dòng xe</option>
-		    		<option value="Xe tay ga" >Xe tay ga</option>
-		    		<option value="Xe số" >Xe số</option>
-		    		<option value="Xe thể thao">Xe thể thao</option>	    		
+		    		<option ${bikeInf.getBikeLine().equals('Xe tay ga')?'selected':'' }  value="Xe tay ga" >Xe tay ga</option>
+		    		<option ${bikeInf.getBikeLine().equals('Xe số')?'selected':'' }  value="Xe số" >Xe số</option>
+		    		<option ${bikeInf.getBikeLine().equals('Xe thể thao')?'selected':'' }  value="Xe thể thao">Xe thể thao</option>	    		
 		    	</select>
 		    	<span style="color: red">${bikelineErr}</span>
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="BikeManufactor" class="form-label">Nhà sản xuất:</label>
-		    	<select  class="form-control" id="BikeManufactor" name="BikeManufactor">
+		    	<select  class="form-control" id="BikeManufactor" name="BikeManufactor" >
 		    		<option>Chọn nhà sản xuất</option>
 		    		<c:forEach var="item" items="${listManufactor}">
-		    			<option value="${item}" >${item}</option>
+		    			<option ${item.equals(bikeInf.getBikeId() )?'selected':'' } value="${item}" >${item}</option>
 		    		</c:forEach>  		
 		    	</select>
 		    	<span style="color: red">${manufactorErr}</span>
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="Description" class="form-label">Mô tả:</label>
-		    	<textarea class="form-control" name="description" id="Description"></textarea>
+		    	<textarea class="form-control" name="description" id="Description" >${bikeInf.getDescription() }</textarea>
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="price" class="form-label">Giá thuê theo ngày:</label>
-		    	<input type="number" class="form-control" id="price" name="price">
+		    	<input type="number" class="form-control" id="price" name="price" value="${bikeInf.getPrice() }">
 		    	<span style="color: red">${priceErr}</span>
 	  		</div>
+	  		<input hidden name="id" value="${bikeInf.getBikeId() }">
+	  		<input hidden name="action" value="${act.equals('update')?act:'create'}" >
 	  		<div class="modal-footer">
-	        	<button type="submit" id="saveBikeBtn" class="btn btn-primary btn-submit">Save changes</button>
+	        	<button type="submit" id="saveBikeBtn" class="btn btn-primary btn-submit">${act=='update'?'Lưu thay đổi':'Thêm' }</button>
 	      </div>
 	  	</form>
         <form id="uploadForm"  method="post" enctype="multipart/form-data">
@@ -111,10 +113,9 @@
 	        <input type="file" name="imgFile" />
 	        <button type="submit">Tải ảnh lên</button>
         </form>
-	        
-			<div id="uploadedAvatarsContainer">
-			    <jsp:include page="Uploadedimgs.jsp"/>
-			</div>
+		<div id="uploadedAvatarsContainer">
+		    <jsp:include page="Uploadedimgs.jsp"/>
+		</div>
       </div>
       
     </div>

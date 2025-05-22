@@ -52,6 +52,10 @@ public class BikeBo {
 		return bikeDao.getBikeManufactor();
 	}
 	
+	public boolean updateBikeWithPhotos(Bike bike, ArrayList<String> photo) throws Exception {
+		return bikeDao.updateBikeWithPhotos(bike, photo);
+	}
+	
 	
 	
 }

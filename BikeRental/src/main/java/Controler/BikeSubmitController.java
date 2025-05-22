@@ -59,6 +59,7 @@ public class BikeSubmitController extends HttpServlet {
 		ArrayList<String> uploadedImages = (ArrayList<String>) session.getAttribute("uploadedImgs");
 
 		// Lấy thông tin xe từ request
+		String id = request.getParameter("id");
 		String bikeName = request.getParameter("bikeName");
 		String licensePlate = request.getParameter("licensePlate");
 		String manufacturingYear = request.getParameter("manufacturingYear"); 
@@ -67,6 +68,7 @@ public class BikeSubmitController extends HttpServlet {
 		String BikeManufactor = request.getParameter("BikeManufactor");
 		String description = request.getParameter("description");
 		String price = request.getParameter("price");
+		String act = request.getParameter("action");
 		
 		boolean hasErr = false;
 
@@ -80,11 +82,11 @@ public class BikeSubmitController extends HttpServlet {
 			    request.setAttribute("licensePlateErr", "Biển số xe không đúng định dạng! (VD: 75AF01100)");
 			    hasErr = true;
 			}
-			if (manufacturingYear!=null ||Integer.parseInt(manufacturingYear) < 1900 || Integer.parseInt(manufacturingYear)> java.time.Year.now().getValue()) {
+			if (manufacturingYear==null ||Integer.parseInt(manufacturingYear) < 1900 || Integer.parseInt(manufacturingYear)> java.time.Year.now().getValue()) {
 		        request.setAttribute("yearErr", "Năm sản xuất không hợp lệ!");
 		        hasErr = true;
 			}
-			if (manufacturingYear!=null ) {
+			if (manufacturingYear==null ) {
 		        request.setAttribute("yearErr", "Năm sản xuất không được để trống!");
 		        hasErr = true;
 			}
@@ -112,8 +114,14 @@ public class BikeSubmitController extends HttpServlet {
 			    return;
 			}
 			// Gọi DAO để lưu vào CSDL
-			Bike bike = new Bike(1,bikeName, licensePlate, Integer.parseInt(manufacturingYear),bikeLine,BikeManufactor,"",description,Long.parseLong( request.getParameter("price")),0,null);
-			bBO.addBikeWithPhotos(bike, currentUser.getUserId(), uploadedImages);
+			if(act!= null && act.equals("create")) {
+				Bike bike = new Bike(1,bikeName, licensePlate, Integer.parseInt(manufacturingYear),bikeLine,BikeManufactor,"",description,Long.parseLong( request.getParameter("price")),0,null);
+				bBO.addBikeWithPhotos(bike, currentUser.getUserId(), uploadedImages);				
+			}else {
+				Bike bike = new Bike(Integer.parseInt(id),bikeName, licensePlate, Integer.parseInt(manufacturingYear),bikeLine,BikeManufactor,"",description,Long.parseLong( request.getParameter("price")),0,null);
+				bBO.updateBikeWithPhotos(bike, uploadedImages);
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

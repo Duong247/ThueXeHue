@@ -245,5 +245,6 @@ from [User] left join Bike as b on [User].UserId = b.OwnerId
 where [User].UserId = 5
 
 select * from BikePhoto
+where BikeId = 5
 
 select * from Bike

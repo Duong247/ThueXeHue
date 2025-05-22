@@ -333,6 +333,56 @@ public class BikeDAO {
 		kn.cn.close();
 		return bikePhotos;
 	}
+	
+	public boolean updateBikeWithPhotos(Bike bike, ArrayList<String> photolist) throws Exception {
+	    PreparedStatement psUpdateBike = null;
+	    PreparedStatement psDeletePhotos = null;
+	    PreparedStatement psInsertPhoto = null;
+	    KetNoi kn = new KetNoi();
+	    kn.ketnoi();
+
+	    try {
+	        String sqlUpdateBike = "UPDATE Bike SET BikeName = ?, LicensePlate = ?, ManufacturingYear = ?, " +
+	                "BikeLine = ?, BikeManufactor = ?, Status = ?, Description = ?, Price = ? WHERE BikeId = ?";
+	        psUpdateBike = kn.cn.prepareStatement(sqlUpdateBike);
+	        psUpdateBike.setString(1, bike.getBikeName());
+	        psUpdateBike.setString(2, bike.getLicensePlate());
+	        psUpdateBike.setInt(3, bike.getManufacturingYear());
+	        psUpdateBike.setString(4, bike.getBikeLine());
+	        psUpdateBike.setString(5, bike.getBikeManufactor());
+	        psUpdateBike.setInt(6, bike.getStatus());
+	        psUpdateBike.setString(7, bike.getDescription());
+	        psUpdateBike.setDouble(8, bike.getPrice());
+	        psUpdateBike.setInt(9, bike.getBikeId());
+
+	        int updateCount = psUpdateBike.executeUpdate();
+
+	        String sqlDeletePhotos = "DELETE FROM BikePhoto WHERE BikeId = ?";
+	        psDeletePhotos = kn.cn.prepareStatement(sqlDeletePhotos);
+	        psDeletePhotos.setInt(1, bike.getBikeId());
+	        psDeletePhotos.executeUpdate();
+
+	        String sqlInsertPhoto = "INSERT INTO BikePhoto (Photo, BikeId) VALUES (?, ?)";
+	        psInsertPhoto = kn.cn.prepareStatement(sqlInsertPhoto);
+	        for (String photo : photolist) {
+	            psInsertPhoto.setString(1, photo);
+	            psInsertPhoto.setInt(2, bike.getBikeId());
+	            psInsertPhoto.addBatch();
+	        }
+	        psInsertPhoto.executeBatch();
+
+	        return updateCount > 0;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw e;
+	    } finally {
+	        if (psUpdateBike != null) psUpdateBike.close();
+	        if (psDeletePhotos != null) psDeletePhotos.close();
+	        if (psInsertPhoto != null) psInsertPhoto.close();
+	        if (kn != null) kn.cn.close();
+	    }
+	}
+
 
 	
 	
