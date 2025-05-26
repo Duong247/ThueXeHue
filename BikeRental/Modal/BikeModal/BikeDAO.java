@@ -13,8 +13,8 @@ public class BikeDAO {
 		ArrayList<Bike> bikes = new ArrayList<Bike>();
 		KetNoi kn = new KetNoi();
 		kn.ketnoi();
-		String sql="select Bike.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,Photo,CreatedTime\r\n"
-				+ "from Bike left join BikePhoto on Bike.BikeId = BikePhoto.BikeId";
+		String sql="select *, (SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo\r\n"
+				+ "from Bike as b\r\n";
 		PreparedStatement cmd= kn.cn.prepareStatement(sql);
 		ResultSet rs= cmd.executeQuery();
 		while (rs.next()) {
@@ -40,10 +40,8 @@ public class BikeDAO {
 		ArrayList<Bike> bikes = new ArrayList<Bike>();
 		KetNoi kn = new KetNoi();
 		kn.ketnoi();
-		String sql="select Top 8 Bike.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,Photo,CreatedTime\r\n"
-				+ "from Bike left join BikePhoto on Bike.BikeId = BikePhoto.BikeId\r\n"
-				+ "where Status=1\r\n"
-				+ "order by CreatedTime";
+		String sql="select Top 8 *, (SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo\r\n"
+				+ "from Bike as b";
 		PreparedStatement cmd= kn.cn.prepareStatement(sql);
 		ResultSet rs= cmd.executeQuery();
 		while (rs.next()) {
@@ -69,9 +67,9 @@ public class BikeDAO {
 		Bike bike = null;
 		KetNoi kn = new KetNoi();
 		kn.ketnoi();
-		String sql="select Bike.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,Photo,CreatedTime\r\n"
-				+ "from Bike left join BikePhoto on Bike.BikeId = BikePhoto.BikeId\r\n"
-				+ "where Bike.BikeId = ?";
+		String sql="select b.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo,CreatedTime\r\n"
+				+ "from Bike as b \r\n"
+				+ "where b.BikeId = ?";
 		PreparedStatement cmd= kn.cn.prepareStatement(sql);
 		cmd.setInt(1, id);
 		ResultSet rs= cmd.executeQuery();
@@ -102,9 +100,9 @@ public class BikeDAO {
 		KetNoi kn = new KetNoi();
 		kn.ketnoi();
 		String sql="\r\n"
-				+ "SELECT Bike.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,Photo,CreatedTime\r\n"
-				+ "FROM Bike LEFT JOIN BikePhoto ON Bike.BikeId = BikePhoto.BikeId\r\n"
-				+ "ORDER BY Bike.BikeId\r\n"
+				+ "SELECT b.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo,CreatedTime\r\n"
+				+ "FROM Bike as b\r\n"
+				+ "ORDER BY b.BikeId\r\n"
 				+ "OFFSET (? - 1) * ? ROWS\r\n"
 				+ "FETCH NEXT ? ROWS ONLY;";
 		PreparedStatement cmd= kn.cn.prepareStatement(sql);
@@ -382,6 +380,215 @@ public class BikeDAO {
 	        if (kn != null) kn.cn.close();
 	    }
 	}
+
+	public ArrayList<String> getBikeBikeLine() throws Exception{
+		ArrayList<String> listBikeLine =new ArrayList<String>();
+		KetNoi kn = new KetNoi();
+		kn.ketnoi();
+		String sql="select * from BikeLine";
+		PreparedStatement cmd= kn.cn.prepareStatement(sql);
+		ResultSet rs= cmd.executeQuery();
+		while (rs.next()) {
+			String BikeLine= rs.getString("BikeLine");
+			listBikeLine.add(BikeLine);
+		}
+		rs.close();
+		kn.cn.close();
+		return listBikeLine;
+	}
+	
+	public ArrayList<String> getBikeStatus() throws Exception{
+		ArrayList<String> listBikeStatus =new ArrayList<String>();
+		KetNoi kn = new KetNoi();
+		kn.ketnoi();
+		String sql="select * from BikeStatus";
+		PreparedStatement cmd= kn.cn.prepareStatement(sql);
+		ResultSet rs= cmd.executeQuery();
+		while (rs.next()) {
+			String BikeStatus= rs.getString("statusMessage");
+			listBikeStatus.add(BikeStatus);
+		}
+		rs.close();
+		kn.cn.close();
+		return listBikeStatus;
+	}
+	
+	
+	public ArrayList<Integer> getBikeStatusId() throws Exception{
+		ArrayList<Integer> listBikeStatus =new ArrayList<Integer>();
+		KetNoi kn = new KetNoi();
+		kn.ketnoi();
+		String sql="select * from BikeStatus";
+		PreparedStatement cmd= kn.cn.prepareStatement(sql);
+		ResultSet rs= cmd.executeQuery();
+		while (rs.next()) {
+			int BikeStatus= rs.getInt("statusId");
+			listBikeStatus.add(BikeStatus);
+		}
+		rs.close();
+		kn.cn.close();
+		return listBikeStatus;
+	}
+	
+	public String statusStr(int statusId) throws Exception {
+		String BikeStatus="";
+		KetNoi kn = new KetNoi();
+		kn.ketnoi();
+		String sql="select * from BikeStatus where statusId=?";
+		PreparedStatement cmd= kn.cn.prepareStatement(sql);
+		cmd.setInt(1, statusId);
+		ResultSet rs= cmd.executeQuery();
+		while (rs.next()) {
+			BikeStatus= rs.getString("statusMessage");
+		}
+		rs.close();
+		kn.cn.close();
+		return BikeStatus;
+	}
+	
+	public boolean updateDenyBikestatus(int bikeId)throws Exception{
+		KetNoi kn = new KetNoi();
+		kn.ketnoi();
+		String sql="update Bike\r\n"
+				+ "set Status = -2\r\n"
+				+ "where BikeId=?";
+		try {
+			PreparedStatement cmd= kn.cn.prepareStatement(sql);
+			cmd.setInt(1, bikeId);
+			int rs= cmd.executeUpdate();
+			return rs>0;
+		}finally {
+	        kn.cn.close();
+	    } 
+	}
+	
+	
+	
+	
+	
+	public int  getCountBikeOfUser(int id ) throws Exception{
+		int count =0;
+		KetNoi kn = new KetNoi();
+		kn.ketnoi();
+		String sql="select COUNT(*) as countBike from Bike\r\n"
+				+ "where OwnerId=?";
+		PreparedStatement cmd= kn.cn.prepareStatement(sql);
+		cmd.setInt(1, id);
+		ResultSet rs= cmd.executeQuery();
+		if(rs.next()) {
+			count= rs.getInt("countBike");
+			
+		}
+		rs.close();
+		kn.cn.close();
+		return count;
+	}
+	
+	public boolean checkBikeExistsInOrder(int bikeId) throws Exception {
+		KetNoi kn = new KetNoi();
+		kn.ketnoi();
+		String sql="select * \r\n"
+				+ "from Bike\r\n"
+				+ "where BikeId in( \r\n"
+				+ "				select BikeId\r\n"
+				+ "				from OrderDetail join [Order] as o on OrderDetail.OrderId = o.OrderId \r\n"
+				+ "				where Status =1 or status=0)\r\n"
+				+ "and BikeId = 1";
+		PreparedStatement cmd= kn.cn.prepareStatement(sql);
+		cmd.setInt(1, bikeId);
+		ResultSet rs= cmd.executeQuery();
+		if(rs.next()) {
+			rs.close();
+			kn.cn.close();
+			return true;
+		}
+		rs.close();
+		kn.cn.close();
+		return false;
+	}
+	
+	public int getBikePageCount(String bikeLine, String manufactor, String bikeName, int status, int pageSize) throws Exception {
+	    KetNoi kn = new KetNoi();
+	    kn.ketnoi();
+
+	    StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM Bike WHERE BikeLine LIKE ? AND BikeManufactor LIKE ? AND BikeName LIKE ?");
+	    if (status != -99) {
+	        sql.append(" AND Status = ?");
+	    }
+
+	    PreparedStatement cmd = kn.cn.prepareStatement(sql.toString());
+	    cmd.setString(1, "%" + bikeLine + "%");
+	    cmd.setString(2, "%" + manufactor + "%");
+	    cmd.setString(3, "%" + bikeName + "%");
+
+	    if (status != -99) {
+	        cmd.setInt(4, status);
+	    }
+
+	    ResultSet rs = cmd.executeQuery();
+	    int count = 0;
+	    if (rs.next()) {
+	        count = rs.getInt(1);
+	    }
+
+	    rs.close();
+	    kn.cn.close();
+
+	    return (int) Math.ceil((double) count / pageSize);
+	}
+
+	public ArrayList<Bike> searchBikeWithPagination(String bikeLine, String manufactor, String bikeName, int status, int pageNum, int pageSize) throws Exception {
+	    ArrayList<Bike> list = new ArrayList<>();
+	    KetNoi kn = new KetNoi();
+	    kn.ketnoi();
+
+	    StringBuilder sql = new StringBuilder(
+	        "SELECT *, (SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo " +
+	        "FROM Bike AS b WHERE BikeLine LIKE ? AND BikeManufactor LIKE ? AND BikeName LIKE ?"
+	    );
+
+	    if (status != -99) {
+	        sql.append(" AND Status = ?");
+	    }
+
+	    sql.append(" ORDER BY BikeId OFFSET ((? - 1) * ?) ROWS FETCH NEXT ? ROWS ONLY");
+
+	    PreparedStatement cmd = kn.cn.prepareStatement(sql.toString());
+	    cmd.setString(1, "%" + bikeLine + "%");
+	    cmd.setString(2, "%" + manufactor + "%");
+	    cmd.setString(3, "%" + bikeName + "%");
+
+	    int paramIndex = 4;
+	    if (status != -99) {
+	        cmd.setInt(paramIndex++, status);
+	    }
+
+	    cmd.setInt(paramIndex++, pageNum);
+	    cmd.setInt(paramIndex++, pageSize);
+	    cmd.setInt(paramIndex, pageSize);
+
+	    ResultSet rs = cmd.executeQuery();
+	    while (rs.next()) {
+	        int bikeId = rs.getInt("BikeId");
+	        String name = rs.getString("BikeName");
+	        String licensePlate = rs.getString("LicensePlate");
+	        int manufacturingYear = rs.getInt("ManufacturingYear");
+	        String BikeLine = rs.getString("BikeLine");
+	        String BikeManufactor = rs.getString("BikeManufactor");
+	        int bikeStatus = rs.getInt("Status");
+	        String description = rs.getString("Description");
+	        Long price = rs.getLong("price");
+	        String photo = rs.getString("Photo");
+	        Date createdTime = rs.getDate("CreatedTime");
+
+	        list.add(new Bike(bikeId, name, licensePlate, manufacturingYear, BikeLine, BikeManufactor, photo, description, price, bikeStatus, createdTime));
+	    }
+
+	    rs.close();
+	    kn.cn.close();
+	    return list;	
+	}
+
 
 
 	

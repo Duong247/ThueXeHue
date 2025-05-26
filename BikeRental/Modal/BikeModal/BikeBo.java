@@ -51,11 +51,45 @@ public class BikeBo {
 	public ArrayList<String> getBikeManufactor() throws Exception{
 		return bikeDao.getBikeManufactor();
 	}
+	public ArrayList<String> getBikeLine() throws Exception{
+		return bikeDao.getBikeBikeLine();
+	}
 	
 	public boolean updateBikeWithPhotos(Bike bike, ArrayList<String> photo) throws Exception {
 		return bikeDao.updateBikeWithPhotos(bike, photo);
 	}
 	
+	public int getCountBikeOfUser(int id) throws Exception {
+		return bikeDao.getCountBikeOfUser(id);
+	}
 	
+	public boolean checkBikeExistsInOrder(int bikeId) throws Exception{
+		return bikeDao.checkBikeExistsInOrder(bikeId);
+	}
+	
+	public int getBikePageCount(String bikeLine, String manufactor, String bikeName,int Statusid, int pageSize) throws Exception {
+		return bikeDao.getBikePageCount(bikeLine, manufactor, bikeName,Statusid, pageSize);
+	}
+	
+	public ArrayList<Bike> searchBikeWithPagination(String bikeLine, String manufactor, String bikeName,int Statusid, int pageNum, int pageSize) throws Exception {
+		return bikeDao.searchBikeWithPagination(bikeLine, manufactor, bikeName, Statusid, pageNum, pageSize);
+	}
+	
+	public ArrayList<String> getBikeStatus() throws Exception {
+		return bikeDao.getBikeStatus();
+	}
+	
+	public String statusStr(int statusId) throws Exception{
+		return bikeDao.statusStr(statusId);
+	}
+	
+	public ArrayList<Integer> getBikeStatusId()throws Exception{
+		return bikeDao.getBikeStatusId();
+	}
+	
+	
+	public boolean updateDenyBikestatus(int bikeId) throws Exception{
+		return bikeDao.updateDenyBikestatus(bikeId);
+	}
 	
 }

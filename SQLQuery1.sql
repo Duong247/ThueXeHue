@@ -61,6 +61,16 @@ VALUES
 (N'SYM'),
 (N'Husqvarna'),
 (N'BMW');
+
+ALTER TABLE [Message]
+ADD CONSTRAINT DF_ten_bang_time DEFAULT GETDATE() FOR time;
+
+
+
+
+
+
+
 --
 select [User].UserId,UserName, COUNT(BikeId) from Bike join [User] on Bike.OwnerId = [User].UserId
 group by [User].UserId,UserName
@@ -247,4 +257,149 @@ where [User].UserId = 5
 select * from BikePhoto
 where BikeId = 5
 
+select COUNT(*) as countBike from Bike
+where OwnerId=5
+
+
+
+
+
+select * 
+from OrderDetail join [Order] on [Order].OrderId = OrderDetail.OrderId
+				 join Bike on Bike.BikeId = OrderDetail.BikeId
+
+select [Order].OrderId
+from OrderDetail join [Order] on [Order].OrderId = OrderDetail.OrderId
+				 join Bike on Bike.BikeId = OrderDetail.BikeId
+where OwnerId = 5
+
+SELECT CAST(o.OrderDate AS DATE) AS OrderDay,SUM(od.RentalFee) AS TotalRevenue 
+FROM [Order] o 
+JOIN OrderDetail od ON o.OrderId = od.OrderId 
+WHERE CAST(o.OrderDate AS DATE) >= DATEADD(DAY, -6, CAST(GETDATE() AS DATE)) 
+GROUP BY CAST(o.OrderDate AS DATE)
+ORDER BY OrderDay
+
+
+
+
+
+WITH Last7Days AS (
+    SELECT CAST(GETDATE() AS DATE) AS OrderDay
+    UNION ALL
+    SELECT DATEADD(DAY, -1, OrderDay)
+    FROM Last7Days
+    WHERE DATEADD(DAY, -1, OrderDay) >= DATEADD(DAY, -6, CAST(GETDATE() AS DATE))
+)
+SELECT 
+    FORMAT(d.OrderDay, 'dddd') AS DayLabel, 
+    ISNULL(SUM(od.RentalFee), 0) AS TotalRevenue
+FROM Last7Days d
+LEFT JOIN [Order] o ON CAST(o.OrderDate AS DATE) = d.OrderDay AND o.Status = 1
+LEFT JOIN OrderDetail od ON o.OrderId = od.OrderId
+GROUP BY d.OrderDay
+ORDER BY d.OrderDay;
+
+SELECT *,(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo, 
+	             b.Description, od.RentalFee, od.PickupDate, od.ReturnDate 
+	             JOIN Bike b ON od.BikeId = b.BikeId 
+
+select Top 8 *, (SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo
+from Bike as b
+
 select * from Bike
+
+select b.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,
+OwnerId,BikeManufactor,Status,Description,Price,
+(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo,CreatedTime
+from Bike as b 
+where b.BikeId = 5
+
+
+
+delete from BikePhoto
+where  BikeId =22
+delete from Bike
+where  BikeId =22
+
+--- check xe con trong don hang
+select * 
+from Bike
+where BikeId in( 
+				select BikeId
+				from OrderDetail join [Order] as o on OrderDetail.OrderId = o.OrderId 
+				where Status =1 or status=0)
+and BikeId = 1
+
+
+
+SELECT o.OrderId, o.OrderDate, o.PickupPlace, o.ReturnPlace, o.Status,
+	             od.BikeId, b.BikeName, b.LicensePlate, b.ManufacturingYear, b.BikeLine, b.BikeManufactor,
+	             (SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo,
+	             b.Description, od.RentalFee, od.PickupDate, od.ReturnDate
+	             FROM [Order] o
+	             JOIN OrderDetail od ON o.OrderId = od.OrderId
+	             JOIN Bike b ON od.BikeId = b.BikeId
+	             WHERE o.UserId = 5
+	             ORDER BY o.OrderDate DESC
+
+
+SELECT o.OrderId,OrderDetailId , b.BikeId,OwnerId,(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo
+FROM [Order] AS o 
+	JOIN OrderDetail AS od ON od.OrderId = o.OrderId
+	JOIN Bike AS b ON b.BikeId = od.BikeId
+WHERE OwnerId = 5
+	
+
+SELECT o.OrderId, o.OrderDate, o.PickupPlace, o.ReturnPlace, o.Status,
+       od.BikeId, b.BikeName, b.LicensePlate, b.ManufacturingYear, b.BikeLine, b.BikeManufactor,
+       (SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo,
+       b.Description, od.RentalFee, od.PickupDate, od.ReturnDate
+FROM [Order] o
+JOIN OrderDetail od ON o.OrderId = od.OrderId
+JOIN Bike b ON od.BikeId = b.BikeId
+WHERE b.OwnerId =5
+ORDER BY o.OrderDate DESC
+
+select * from [User]
+
+SELECT b.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo,CreatedTime
+FROM Bike as b
+ORDER BY b.BikeId
+OFFSET (1 - 1) * 15 ROWS
+FETCH NEXT 15 ROWS ONLY
+
+
+SELECT * FROM [User]
+where UserName like N'%văn%'
+ORDER BY userId OFFSET 1 ROWS FETCH NEXT 15 ROWS ONLY
+
+SELECT *,(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo
+FROM Bike as b
+WHERE 
+    BikeLine LIKE N'%%' 
+    AND BikeManufactor LIKE N'%%'
+    AND BikeName LIKE N'%%'
+	AND Status Like '%%'
+ORDER BY BikeId
+OFFSET ((1 - 1) * 15) ROWS
+FETCH NEXT 15 ROWS ONLY;
+
+select * from BikeStatus where statusId=1
+
+update Bike
+set Status = -2
+where BikeId=?
+
+select * from Slider
+
+	insert into Slider(sliderPhoto)
+	values(?);
+
+
+SELECT * FROM Message WHERE
+ (sender = '' AND receiver = '') OR (sender = '' AND receiver = '')
+ ORDER BY time ASC
+
+ insert into Message(sender,reciever,content)
+ values(sender,receiver,content)

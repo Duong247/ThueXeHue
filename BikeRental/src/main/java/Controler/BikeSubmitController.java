@@ -71,8 +71,6 @@ public class BikeSubmitController extends HttpServlet {
 		String act = request.getParameter("action");
 		
 		boolean hasErr = false;
-
-		
 		try {
 			if (bikeName == null || bikeName.trim().isEmpty()) {
 			    request.setAttribute("nameErr", "Tên xe không được để trống!");
@@ -106,20 +104,30 @@ public class BikeSubmitController extends HttpServlet {
 				request.setAttribute("manufactorErr","Vui lòng chọn dòng xe.");
 				hasErr = true;
 			}
+			request.setAttribute("bikeId", id);
+			request.setAttribute("bikeName", bikeName);
+			request.setAttribute("licensePlate", licensePlate);
+			request.setAttribute("manufacturingYear", manufacturingYear );
+			request.setAttribute("price", price);
 			request.setAttribute("bikeLine", bikeLine);
+			request.setAttribute("BikeManufactor", BikeManufactor);
+			request.setAttribute("description", description);
+			request.setAttribute("listBikeLine", bBO.getBikeLine());
+			request.setAttribute("listManufactor", bBO.getBikeManufactor());
+			
 			request.setAttribute("hasErr", hasErr);
 			if(hasErr) {
 				RequestDispatcher rq = request.getRequestDispatcher("OwnerManagerment?p=bike");
 			    rq.forward(request, response);
 			    return;
 			}
-			// Gọi DAO để lưu vào CSDL
 			if(act!= null && act.equals("create")) {
 				Bike bike = new Bike(1,bikeName, licensePlate, Integer.parseInt(manufacturingYear),bikeLine,BikeManufactor,"",description,Long.parseLong( request.getParameter("price")),0,null);
 				bBO.addBikeWithPhotos(bike, currentUser.getUserId(), uploadedImages);				
 			}else {
 				Bike bike = new Bike(Integer.parseInt(id),bikeName, licensePlate, Integer.parseInt(manufacturingYear),bikeLine,BikeManufactor,"",description,Long.parseLong( request.getParameter("price")),0,null);
 				bBO.updateBikeWithPhotos(bike, uploadedImages);
+				session.removeAttribute("uploadedImgs");
 			}
 			
 		} catch (Exception e) {
@@ -127,9 +135,9 @@ public class BikeSubmitController extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		// Xóa session nếu cần
-		session.removeAttribute("uploadedImgs");
-		RequestDispatcher rq = request.getRequestDispatcher("Dashboard.jsp");
+		
+		
+		RequestDispatcher rq = request.getRequestDispatcher("OwnerManagerment?p=bike");
 	    rq.forward(request, response);
 	}
 }

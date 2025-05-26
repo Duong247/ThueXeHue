@@ -2,6 +2,7 @@ package UserModal;
 
 import java.security.MessageDigest;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class UserBO {
 	UserDAO userDao = new UserDAO();
@@ -60,5 +61,28 @@ public class UserBO {
 		return userDao.updatePassword(userId, HashPassword);
 	}
     
+    public ArrayList<User> getAllUser() throws Exception{
+    	return userDao.getAllUser();
+    }
+    public ArrayList<User> getAllUseWithPagination(int pageNum, int pageSize) throws Exception{
+    	return userDao.getAllUseWithPagination(pageNum, pageSize);
+    }
+    
+    public int getUserPageCount(int pageSize) throws Exception {
+        return userDao.getUserPageCount(pageSize);
+    }
+
+    public ArrayList<User> SearchUser(String key,int pageNum, int pageSize) throws Exception{
+    	return userDao.SearchUser(key, pageNum, pageSize);
+    }
+    
+    
+    public int countUsersByKeyword(String keyword) throws Exception {
+    	return userDao.countUsersByKeyword(keyword);
+    }
+    
+    public int getUserPageCountByKeyword(String keyword, int pageSize) throws Exception {
+    	return userDao.getUserPageCountByKeyword(keyword, pageSize);
+    }
     
 }

@@ -34,7 +34,6 @@ public class BikeControler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    
 	    try {
 	    	request.setCharacterEncoding("UTF-8");
 	    	response.setContentType("text/html; charset=UTF-8");
@@ -49,13 +48,14 @@ public class BikeControler extends HttpServlet {
 	    	BikeBo bikebo = new BikeBo();
 	    	int pageNum =1;
 	    	String p = request.getParameter("p");
+	    	
 	    	if (p!=null) {
 	    		pageNum =  Integer.parseInt(p); 
 	    	}
 	    	
 	    	request.setAttribute("listBrands", bikebo.getBrand());
+	    	request.setAttribute("allBikes", bikebo.getBikesWithPagination(pageNum,12));
 	    	request.setAttribute("currentPage", pageNum);
-			request.setAttribute("allBikes", bikebo.getBikesWithPagination(pageNum,12));
 			request.setAttribute("pagecount", bikebo.pageCount(12));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -63,9 +63,7 @@ public class BikeControler extends HttpServlet {
 		}
 	    RequestDispatcher rq = request.getRequestDispatcher("SearchBikes.jsp");
 	    rq.forward(request, response);
-	    
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

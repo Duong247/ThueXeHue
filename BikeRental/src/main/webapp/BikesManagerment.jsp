@@ -60,26 +60,26 @@
         <form action="BikeSubmit"  method="post">
         	<div class="mb-3">
 		    	<label for="bikeName" class="form-label">Tên xe:</label>
-		    	<input type="text" class="form-control" name="bikeName" id="bikeName" placeholder="Ví dụ: Honda Air Blade,..." value="${bikeInf.getBikeName() }">
+		    	<input type="text" class="form-control" name="bikeName" id="bikeName" placeholder="Ví dụ: Honda Air Blade,..." value="${bikeName }">
 		    	<span style="color: red">${nameErr}</span>
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="licensePlate" class="form-label">Biển số:</label>
-		    	<input type="text" class="form-control" name="licensePlate" id="licensePlate" placeholder="Ví dụ: 75AF-011.00,..." value="${bikeInf.getLicensePlate() }">
+		    	<input type="text" class="form-control" name="licensePlate" id="licensePlate" placeholder="Ví dụ: 75AF-011.00,..." value="${licensePlate}">
 		    	<span style="color: red">${licensePlateErr}</span>
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="manufacturingYear" class="form-label">Năm sản xuất:</label>
-		    	<input type="number" class="form-control" id="manufacturingYear" name="manufacturingYear" value="${bikeInf.getManufacturingYear() }">
+		    	<input type="number" class="form-control" id="manufacturingYear" name="manufacturingYear" value="${manufacturingYear}">
 		    	<span style="color: red">${yearErr}</span>
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="bikeLine" class="form-label">Dòng xe:</label>
 		    	<select class="form-control" id="bikeLine" name="bikeLine" ">
 		    		<option>Chọn dòng xe</option>
-		    		<option ${bikeInf.getBikeLine().equals('Xe tay ga')?'selected':'' }  value="Xe tay ga" >Xe tay ga</option>
-		    		<option ${bikeInf.getBikeLine().equals('Xe số')?'selected':'' }  value="Xe số" >Xe số</option>
-		    		<option ${bikeInf.getBikeLine().equals('Xe thể thao')?'selected':'' }  value="Xe thể thao">Xe thể thao</option>	    		
+		    		<c:forEach var="item" items="${listBikeLine}">
+		    			<option ${item.equals(bikeLine )?'selected':'' } value="${item}" >${item}</option>
+		    		</c:forEach>  
 		    	</select>
 		    	<span style="color: red">${bikelineErr}</span>
 	  		</div>
@@ -88,21 +88,21 @@
 		    	<select  class="form-control" id="BikeManufactor" name="BikeManufactor" >
 		    		<option>Chọn nhà sản xuất</option>
 		    		<c:forEach var="item" items="${listManufactor}">
-		    			<option ${item.equals(bikeInf.getBikeId() )?'selected':'' } value="${item}" >${item}</option>
+		    			<option ${item.equals(BikeManufactor)?'selected':'' } value="${item}" >${item}</option>
 		    		</c:forEach>  		
 		    	</select>
 		    	<span style="color: red">${manufactorErr}</span>
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="Description" class="form-label">Mô tả:</label>
-		    	<textarea class="form-control" name="description" id="Description" >${bikeInf.getDescription() }</textarea>
+		    	<textarea class="form-control" name="description" id="Description" >${description}</textarea>
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="price" class="form-label">Giá thuê theo ngày:</label>
-		    	<input type="number" class="form-control" id="price" name="price" value="${bikeInf.getPrice() }">
+		    	<input type="number" class="form-control" id="price" name="price" value="${price }">
 		    	<span style="color: red">${priceErr}</span>
 	  		</div>
-	  		<input hidden name="id" value="${bikeInf.getBikeId() }">
+	  		<input hidden name="id" value="${bikeId }">
 	  		<input hidden name="action" value="${act.equals('update')?act:'create'}" >
 	  		<div class="modal-footer">
 	        	<button type="submit" id="saveBikeBtn" class="btn btn-primary btn-submit">${act=='update'?'Lưu thay đổi':'Thêm' }</button>

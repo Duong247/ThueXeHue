@@ -10,5 +10,8 @@ public class OrderBo {
 		return ODAO.getOrderHistoryByUserId(userId);
 	}
 	
+	public ArrayList<Order>getOrdersByOwnerId(int ownerId) throws Exception{
+		return ODAO.getOrdersByOwnerId(ownerId);
+	}
 	
 }

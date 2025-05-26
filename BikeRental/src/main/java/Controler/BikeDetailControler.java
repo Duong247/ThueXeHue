@@ -37,7 +37,10 @@ public class BikeDetailControler extends HttpServlet {
     	BikeBo bikebo = new BikeBo();
     	UserBO userBo = new UserBO();
     	String bikeId = request.getParameter("id");
-    	
+    	String act = request.getParameter("act");
+    	if (act!=null) {
+    		request.setAttribute("act",act);    		
+    	}
     	if(bikeId!= null) {
     		try {
     			request.setAttribute("ownerInfo", userBo.getUserInfoByBikeId(Integer.parseInt(bikeId)));

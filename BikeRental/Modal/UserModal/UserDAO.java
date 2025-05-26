@@ -179,9 +179,129 @@ public class UserDAO {
 	    
 	    cmd.close();
 	    kn.cn.close();
-	    
 	    return rs > 0;
 	}
+	
+	public ArrayList<User> getAllUser() throws Exception {
+		ArrayList<User> userlist = new ArrayList<User>();
+		KetNoi kn = new KetNoi();
+		kn.ketnoi();
+		String sql ="select * from [User]";
+		PreparedStatement cmd= kn.cn.prepareStatement(sql);
+		ResultSet rs= cmd.executeQuery();
+		if(rs.next()) {
+			int userId = rs.getInt("UserId");
+			String fullname = rs.getString("UserName");
+			String phone = rs.getString("Phone");
+			String photo = rs.getString("Photo");
+			Date dateOfBirth = rs.getDate("DateOfBirth");
+			String address = rs.getString("Address");
+			String password = rs.getString("Password");
+			int role = rs.getInt("role");
+			userlist.add( new User(userId, fullname, phone, password,dateOfBirth,address,photo,role));
+		}
+		rs.close();
+		kn.cn.close();
+		return userlist;
+	}
+	
+	public ArrayList<User> getAllUseWithPagination(int pageNum, int pageSize) throws Exception {
+		ArrayList<User> userlist = new ArrayList<User>();
+		KetNoi kn = new KetNoi();
+		kn.ketnoi();
+		String sql ="SELECT * FROM [User] ORDER BY userId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+		PreparedStatement cmd= kn.cn.prepareStatement(sql);
+		cmd.setInt(1, (pageNum - 1) * pageSize);
+		cmd.setInt(2, pageSize);
+		ResultSet rs= cmd.executeQuery();
+		while(rs.next()) {
+			int userId = rs.getInt("UserId");
+			String fullname = rs.getString("UserName");
+			String phone = rs.getString("Phone");
+			String photo = rs.getString("Photo");
+			Date dateOfBirth = rs.getDate("DateOfBirth");
+			String address = rs.getString("Address");
+			String password = rs.getString("Password");
+			int role = rs.getInt("role");
+			userlist.add( new User(userId, fullname, phone, password,dateOfBirth,address,photo,role));
+		}
+		rs.close();
+		kn.cn.close();
+		return userlist;
+	}
+	
+	public int getUserPageCount(int pageSize) throws Exception {
+		KetNoi kn = new KetNoi();
+		kn.ketnoi();
+	    String sql = "SELECT COUNT(*) FROM [User]";
+	    PreparedStatement ps = kn.cn.prepareStatement(sql);
+	    ResultSet rs = ps.executeQuery();
+	    
+	    int totalCount = 0;
+	    if (rs.next()) {
+	        totalCount = rs.getInt(1);
+	    }
+
+	    rs.close();
+	    ps.close();
+	    kn.cn.close();
+
+	    return (int) Math.ceil((double) totalCount / pageSize);
+	}
+
+	public ArrayList<User> SearchUser(String keyword, int pageNum, int pageSize) throws Exception {
+	    ArrayList<User> userList = new ArrayList<User>();
+	    KetNoi kn = new KetNoi();
+	    kn.ketnoi();
+	    String sql = "SELECT * FROM [User] WHERE UserName LIKE ? ORDER BY userId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+	    PreparedStatement cmd = kn.cn.prepareStatement(sql);
+	    cmd.setString(1, "%" + keyword + "%");
+	    cmd.setInt(2, (pageNum - 1) * pageSize);
+	    cmd.setInt(3, pageSize);
+	    ResultSet rs = cmd.executeQuery();
+	    while (rs.next()) {
+	        int userId = rs.getInt("UserId");
+	        String fullname = rs.getString("UserName");
+	        String phone = rs.getString("Phone");
+	        String photo = rs.getString("Photo");
+	        Date dateOfBirth = rs.getDate("DateOfBirth");
+	        String address = rs.getString("Address");
+	        String password = rs.getString("Password");
+	        int role = rs.getInt("role");
+	        userList.add(new User(userId, fullname, phone, password, dateOfBirth, address, photo, role));
+	    }
+	    rs.close();
+	    kn.cn.close();
+	    return userList;
+	}
+	
+	public int countUsersByKeyword(String keyword) throws Exception {
+	    int count = 0;
+	    KetNoi kn = new KetNoi();
+	    kn.ketnoi();
+	    String sql = "SELECT COUNT(*) FROM [User] WHERE UserName LIKE ?";
+	    PreparedStatement cmd = kn.cn.prepareStatement(sql);
+	    cmd.setString(1, "%" + keyword + "%");
+	    ResultSet rs = cmd.executeQuery();
+	    if (rs.next()) {
+	        count = rs.getInt(1);
+	    }
+	    rs.close();
+	    kn.cn.close();
+	    return count;
+	}
+	
+	public int getUserPageCountByKeyword(String keyword, int pageSize) throws Exception {
+	    int total = countUsersByKeyword(keyword);
+	    return (int) Math.ceil((double) total / pageSize);
+	}
+	
+	
+
+	
+
+	
+	
 
 	
 	

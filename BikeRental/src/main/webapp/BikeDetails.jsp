@@ -56,7 +56,7 @@
             <p> <b>Hãng xe: </b> ${getBike.bikeManufactor}</p>
             <p><b>Biển số: </b>${getBike.licensePlate}</p>
             <p><b>Năm sản xuất: </b>${getBike.manufacturingYear}</p>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Đặt xe</button>
+            <button class="btn btn-primary" ${act!=null?'disabled':'' }  data-bs-toggle="modal" data-bs-target="#exampleModal" >Đặt xe</button>
         </div>
     </div> 
 </div>

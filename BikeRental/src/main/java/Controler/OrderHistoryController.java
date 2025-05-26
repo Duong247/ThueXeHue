@@ -54,10 +54,7 @@ public class OrderHistoryController extends HttpServlet {
 		
 		ArrayList<Order> history;
 		try {
-	    	
-//			TODO set currentUserID for history
 			history = OBO.getOrderHistoryByUserId(currentUser.getUserId());
-//			history = OBO.getOrderHistoryByUserId(5);
 	    	CartItemBO cbo = new CartItemBO();
 	    	BikeBo bBO = new BikeBo();
 	    	request.setAttribute("bBO", bBO);

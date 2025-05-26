@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import BikeModal.BikeBo;
+import SliderModal.SliderBO;
 
 /**
  * Servlet implementation class HomeControler
@@ -31,11 +32,14 @@ public class HomeControler extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			SliderBO sBO = new SliderBO();
 	    	request.setCharacterEncoding("UTF-8");
 	    	response.setContentType("text/html; charset=UTF-8");
 	    	response.setCharacterEncoding("UTF-8");
 	    	BikeBo bikebo = new BikeBo();
 			request.setAttribute("allBikes", bikebo.get_8_Bikes());
+			request.setAttribute("sliderPhotos", sBO.getListSliderPhoto());
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

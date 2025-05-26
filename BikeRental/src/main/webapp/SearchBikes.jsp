@@ -4,11 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@include file="_Header.jsp"%>
-<%int pagecount =  1;
-if(request.getAttribute("pagecount")!=null){
-	pagecount = (Integer) request.getAttribute("pagecount");
-}
-pagecount=(Integer)request.getAttribute("pagecount");%>
+
 <div class="container bike-detail-container" style="margin-top: 95px">
 	<div class="container " >
         <form class="search-bike" action="" method="">
@@ -66,7 +62,7 @@ pagecount=(Integer)request.getAttribute("pagecount");%>
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
-			    <c:forEach var="index" begin="1" end="<%=pagecount%>">
+			    <c:forEach var="index" begin="1" end="${pagecount}">
 			    	<li class="page-item ${index==currentPage?"active":"" }"><a class="page-link" href="BikeControler?p=${index}">${index}</a></li>
 			    </c:forEach>
 			      <a class="page-link" href="BikeControler?p=${p+1}" aria-label="Next">

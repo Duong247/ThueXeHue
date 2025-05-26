@@ -94,6 +94,8 @@ public class Bike {
 	public Date getCreateTime() {
 		return CreateTime;
 	}
+	
+
 
 	
 	

@@ -21,12 +21,17 @@
 	<div id="sidebar" class="bg-dark text-white p-3 transition-width" >
 	  <button id="toggle-btn" class="btn btn-sm btn-light mb-2">☰</button>
 	  <div class="btn-group-cover" >
+	  <ul class="btn-list" style="margin-top: 15px" ${currentUserInf.role!=0?'hidden':'' }>
+	  	  <li><h6 class="sidebar-content"> QUẢN LÍ WEBSITE</h6></li>
+	      <li><a href="OwnerManagerment?p=slider"><i class="fa-solid fa-images"></i><span class="sidebar-content"> Quản lí sider</span></a>  </li>
+	      <li><a href="OwnerManagerment?p=user"><i class="fa-solid fa-users"></i><span class="sidebar-content">Quản lí user</span></a>  </li>
+	      <li><a href="OwnerManagerment?p=adminBike"><i class="fa-solid fa-person-biking"></i><span class="sidebar-content">Quản lí xe</span></a>  </li>
+	    </ul>
 	    <ul class="btn-list">
+	      <li><h6 class="sidebar-content"> QUẢN LÍ CHO THUÊ</h6> </li>
 	      <li><a href="OwnerManagerment?p=main"><i class="fa-solid fa-gauge"></i><span class="sidebar-content">Dashboard</span></a>  </li>
 	      <li><a href="OwnerManagerment?p=bike"><i class="fa-solid fa-motorcycle"></i><span class="sidebar-content">Xe của tôi</span></a>  </li>
 	      <li><a href="OwnerManagerment?p=order"><i class="fa-solid fa-clipboard-list"></i><span class="sidebar-content"> Quản lí đơn hàng</span></a>  </li>
-	      <li></li>
-	      <li></li>
 	    </ul>
 	  </div>
 
@@ -34,6 +39,15 @@
 	 
 	<div id="main-content" class="bg-light p-4 content-scale" style="min-height: 85vh" >
 		<c:choose>
+			<c:when test="${p!=null && p.equals('user') }">
+				<%@include file="UserAdminManagerment.jsp" %>
+			</c:when>
+			<c:when test="${p!=null && p.equals('adminBike') }">
+				<%@include file="BikeAdminManagerment.jsp" %>
+			</c:when>
+			<c:when test="${p!=null && p.equals('slider') }">
+				<%@include file="SliderMangement.jsp" %>
+			</c:when>
 			<c:when test="${p!=null && p.equals('order') }">
 				<%@include file="OrderManagerment.jsp" %>
 			</c:when>
