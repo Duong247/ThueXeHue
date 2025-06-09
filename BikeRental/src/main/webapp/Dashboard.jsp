@@ -13,6 +13,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/3ecdd9878f.js" crossorigin="anonymous"></script>
     <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
+    <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- autoNumeric -->
+	<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.6.0/dist/autoNumeric.min.js"></script>
     <title>HueBikeRent</title>
 </head>
 <body>
@@ -141,7 +145,32 @@ $(document).ready(function () {
     });
 });
 </script>
+<script type="text/javascript">
+	$(document).ready(function () {
+	    AutoNumeric.multiple('.currency', {
+	        digitGroupSeparator: ',',
+	        decimalPlaces: 0, // không có phần thập phân
+	        modifyValueOnWheel: false
+	    });
+	});
+	
+	function deleteconfirm(bikeName) {
+		return confirm("Xe "+ bikeName + " sẽ bị xóa, bạn chắc chắn chứ?");
+	}
+	
+	function denyconfirm(orderId) {
+		return confirm("Đơn hàng "+ orderId + " sẽ bị từ chối, bạn chắc chắn chứ?");
+	}
+	
+	function acceptconfirm(orderId) {
+		return confirm("Đơn hàng "+ orderId + " được xác nhận?");
+	}
+	
+	function completeconfirm(orderId) {
+		return confirm("Xác nhận hoàn tất dơn hàng "+ orderId + "?");
+	}
 
+</script>
 
 </body>
 </html>

@@ -43,13 +43,17 @@ public class OwnerManagermentCotroller extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
     	response.setContentType("text/html; charset=UTF-8");
-    	response.setCharacterEncoding("UTF-8");
+    	response.setCharacterEncoding("UTF-8");	
     	HttpSession session = request.getSession();
     	User currentUser = (User) session.getAttribute("currentUserInf");
     	if (currentUser==null) {
     		response.sendRedirect("Login");
     		return;
     	}
+    	if(currentUser.getRole()!=0 && currentUser.getRole()!=2) {
+			response.sendRedirect("ErrorPage.jsp");
+			return;
+		}
     	String name = currentUser.getUserName();
     	String[] parts = name.trim().split("\\s+"); 
     	String lastName = parts[parts.length - 1];
@@ -64,21 +68,35 @@ public class OwnerManagermentCotroller extends HttpServlet {
     	try {
     		PlotDAO pdao = new PlotDAO();
     		request.setAttribute("bikeCount", bBO.getCountBikeOfUser(currentUser.getUserId()));
-    		ArrayList<Plot> revenues = pdao.getRevenueLast7DaysFull();
+    		request.setAttribute("totalMoney", pdao.totalMoney(currentUser.getUserId()));
+    		ArrayList<Plot> revenues = pdao.getRevenueLast7DaysFull(currentUser.getUserId());
     		request.setAttribute("revenues", revenues);	
     		String p= request.getParameter("p");
     		request.setAttribute("p", p);
+    		request.setAttribute("BikeInOrderCount", pdao.BikeInOrderCount(currentUser.getUserId()));
     		String action = request.getParameter("action");
     		
     		String actStatus = request.getParameter("actStatus");
+    		
     		
     		if(actStatus!=null && actStatus.equals("deny")) {
     			String id= (String) request.getParameter("id");
     			bBO.updateDenyBikestatus(Integer.parseInt(id));
     		}
+    		if(actStatus!=null && actStatus.equals("acp")) {
+    			String id= (String) request.getParameter("id");
+    			bBO.acceptBike(Integer.parseInt(id));
+    		}
+    		
     		
     		if(p!=null) {
     			if (p.equals("adminBike")) {
+    				if(currentUser.getRole()!=0) {
+    					response.sendRedirect("ErrorPage.jsp");
+    					return;
+    				}
+    				
+    				
     			    String pn = request.getParameter("pn");
     			    int pageNum = 1;
     			    if (pn != null) {
@@ -114,7 +132,6 @@ public class OwnerManagermentCotroller extends HttpServlet {
     			    request.setAttribute("currentPage", pageNum);
     			    request.setAttribute("pagecount", pageCount);
 
-    			    // Truyền lại giá trị search để giữ lại trên giao diện
     			    request.setAttribute("searchBikeLine", searchBikeLine);
     			    request.setAttribute("searchManufactor", searchManufactor);
     			    request.setAttribute("searchBikeName", searchBikeName);
@@ -126,7 +143,7 @@ public class OwnerManagermentCotroller extends HttpServlet {
     			   
     			    ArrayList<Bike> OwnerBikes = bBO.getOwnerBike(currentUser.getUserId());
     				request.setAttribute("OwnerBikes", OwnerBikes);
-    				request.setAttribute("listManufactor", bBO.getBikeManufactor());
+
     				request.setAttribute("listBikeLine", bBO.getBikeLine());
     				request.setAttribute(p, OwnerBikes);
     				request.setAttribute("bikeInf", bikeInf);
@@ -135,8 +152,23 @@ public class OwnerManagermentCotroller extends HttpServlet {
     				request.setAttribute("listBikeStatus", bBO.getBikeStatusId());
     				request.setAttribute("bBo", bBO);
     			}
+    			if(p.equals("bike")){
+    				if(currentUser.getRole()!=0 && currentUser.getRole()!=2) {
+    					response.sendRedirect("ErrorPage.jsp");
+    					return;
+    				}
+    				ArrayList<Bike> OwnerBikes = bBO.getOwnerBike(currentUser.getUserId());
+    				request.setAttribute("OwnerBikes", OwnerBikes);
+    				request.setAttribute("listBikeLine", bBO.getBikeLine());
+    				request.setAttribute("listManufactor", bBO.getBikeManufactor());
+    				request.setAttribute("listBikeStatus", bBO.getBikeStatusId());
     			
+    			}
     			if (p.equals("user")) {
+    				if(currentUser.getRole()!=0) {
+    					response.sendRedirect("ErrorPage.jsp");
+    					return;
+    				}
     				String keyword = request.getParameter("searchInput");
         			if (keyword == null) keyword = "";
 
@@ -160,13 +192,34 @@ public class OwnerManagermentCotroller extends HttpServlet {
     			}
     			
     			if(p.equals("order")) {
+    				if(currentUser.getRole()!=0 && currentUser.getRole()!=2) {
+    					response.sendRedirect("ErrorPage.jsp");
+    					return;
+    				}
     				ArrayList<Order> listOrder;
-//    				TODO listOrder = oBO.getOrdersByOwnerId(currentUser.getUserId());
-    				listOrder = oBO.getOrdersByOwnerId(4);
+    				listOrder = oBO.getOrdersByOwnerId(currentUser.getUserId());
     				request.setAttribute("orderList", listOrder);
+    				String id = request.getParameter("orderId");
+    				act = request.getParameter("act");
+    				if (act!=null && act.equals("accept")) {
+    					oBO.acceptOrder(Integer.parseInt(id));
+    				}
+    				if (act!=null && act.equals("deny")) {
+    					oBO.cancelOrder(Integer.parseInt(id));
+    				}
+    				if (act!=null && act.equals("complete")) {
+    					oBO.completeOrder(Integer.parseInt(id));
+    				}
+    				
+    				
+    				
     			}
     			
     			if(p.equals("slider")) {
+    				if(currentUser.getRole()!=0) {
+    					response.sendRedirect("ErrorPage.jsp");
+    					return;
+    				}
     				request.setAttribute("listPhoto", sBO.getListSliderPhoto() );
     			}
     		}

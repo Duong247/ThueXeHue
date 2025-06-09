@@ -3,50 +3,52 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="grp-header-content">
 	<h1>Quản lý xe</h1>
-	<button type="button" class="btn add-bike-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus" style="margin: 0 5px"></i>Thêm xe mới</button>
+	<button type="button" class="btn add-bike-btn" data-bs-toggle="modal" style="background-color: #3454cf !important" data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus" style="margin: 0 5px"></i>Thêm xe mới</button>
 </div>
 
 <div class="cover">
   <div class="row align-items-start g-3">
 	  <c:forEach var="bike" items="${OwnerBikes}">
+  		<c:if test="${OwnerBikes[0].bikeId !=0}">
 			<div class="content-cover col-lg-4 col-6">
 				<div class="bike-card">
 					<div class="upper-bike-inf " >
-						<img src="assets/img/motobikes/${bike.getPhoto()==null?'assets/img/logo2.png':bike.getPhoto()}" class="img-thumbnail bike-img" alt="...">
+						<img src="${bike.getPhoto()==null?'assets/img/logo2.png':bike.getPhoto()}" class="img-thumbnail bike-img" style="max-height: 130px" alt="...">
 						<div class="bike-inf" >
 							<p class="bike-name"><b>Tên xe:</b> ${bike.getBikeName() }</p>
 							<p><b>Biển số: </b>${bike.getLicensePlate() }</p>
-							<p class="bike-status bike-busy">${bike.getStatus()}</p>
+							<c:choose>
+								<c:when test="${bike.getStatus()==-2}">
+									<p class="btn btn-danger">xe bị từ chối </p>
+								</c:when>
+								<c:when test="${bike.getStatus()==-1}">
+									<p class="btn btn-secondary">Chờ được duyệt</p>
+								</c:when>
+								<c:when test="${bike.getStatus()==0}">
+									<p class="btn btn-warning">Đang được thuê</p>
+								</c:when>
+								<c:when test="${bike.getStatus()==1}">
+									<p class="btn btn-success">Sẵn sàng</p>
+								</c:when>
+							</c:choose>
 						</div>
 					</div>
 					<div class="d-grid gap-2 d-md-block text-center" style="border-top:1px #ccc solid; padding: 5px">
 					  <a class="btn btn-primary" href="UpdateBikeController?id=${bike.getBikeId() }" type="button"><i class="fa-solid fa-pencil"></i></a>
-					  <button class="btn btn-danger" type="button"><i class="fa-solid fa-trash"></i></button>
+					  <button class="btn btn-danger" type="button" onclick="return deleteconfirm('${bike.getBikeName()}')"><i class="fa-solid fa-trash"></i></button>
 					</div>
 				</div>
 			</div>
+		  </c:if>
 	  </c:forEach>
+		  <c:if test="${OwnerBikes[0].bikeId ==0}">
+		  	<div class="text-center">
+		  		Bạn chưa đăng tải xe nào!
+		  	</div>
+		  </c:if>
   </div>
 </div>
-  <div class="text-center mt-3">
-	<nav aria-label="Page navigation example">
-		<ul class="pagination" style="justify-content: center;">
-		  <li class="page-item">
-		    <a class="page-link" href="#" aria-label="Previous">
-		      <span aria-hidden="true">&laquo;</span>
-		    </a>
-		  </li>
-		  <li class="page-item"><a class="page-link" href="#">1</a></li>
-		  <li class="page-item"><a class="page-link" href="#">2</a></li>
-		  <li class="page-item"><a class="page-link" href="#">3</a></li>
-		  <li class="page-item">
-		    <a class="page-link" href="#" aria-label="Next">
-		      <span aria-hidden="true">&raquo;</span>
-		    </a>
-		  </li>
-		</ul>
-	</nav>
- </div>
+ 
  
  
  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -99,7 +101,7 @@
 	  		</div>
 	  		<div class="mb-3">
 		    	<label for="price" class="form-label">Giá thuê theo ngày:</label>
-		    	<input type="number" class="form-control" id="price" name="price" value="${price }">
+		    	<input type="text" class="form-control" id="price" name="price" value="${price }">
 		    	<span style="color: red">${priceErr}</span>
 	  		</div>
 	  		<input hidden name="id" value="${bikeId }">
@@ -111,7 +113,7 @@
         <form id="uploadForm"  method="post" enctype="multipart/form-data">
         	<label>Ảnh :</label>
 	        <input type="file" name="imgFile" />
-	        <button type="submit">Tải ảnh lên</button>
+	        <button type="submit"><i class="fa-solid fa-cloud-arrow-up"></i>Tải ảnh lên</button>
         </form>
 		<div id="uploadedAvatarsContainer">
 		    <jsp:include page="Uploadedimgs.jsp"/>

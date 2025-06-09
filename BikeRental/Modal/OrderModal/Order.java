@@ -66,6 +66,16 @@ public class Order {
         this.items.add(item);
     }
 	
+	public Order(ArrayList<CartItem> items) {
+        this.items = items;
+    }
+
+	public double getTotal() {
+	    return items.stream()
+	                .mapToDouble(item -> item.getSubtotal())
+	                .sum();
+	}
+	
 	
     
     

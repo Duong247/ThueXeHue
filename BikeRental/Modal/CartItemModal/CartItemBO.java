@@ -41,6 +41,10 @@ public class CartItemBO {
 		return cdao.addNewOrderWithDetails(userId, pickupPlace, returnPlace,details);
 	}
 	
+	public boolean addMultipleOrdersByOwner(int userId, String pickupPlace, String returnPlace,ArrayList<CartItem> details ) throws Exception {
+		return cdao.addMultipleOrdersByOwner(userId, pickupPlace, returnPlace,details);
+	}
+	
 	public ArrayList<CartItem>getOrderHistoryByUserId(int userId) throws Exception{
 		return cdao.getOrderHistoryByUserId(userId);
 	}

@@ -22,6 +22,7 @@ import BikeModal.Bike;
 import BikeModal.BikeBo;
 import CartItemModal.CartItem;
 import CartItemModal.CartItemBO;
+import OrderModal.OrderBo;
 import UserModal.User;
 
 /**
@@ -50,6 +51,7 @@ public class OrderCotroler extends HttpServlet {
     	boolean editmode = false;
     	request.setAttribute("editmode", editmode);
     	
+    	OrderBo oBO = new OrderBo();
     	BikeBo bikeBo = new BikeBo();
     	request.setAttribute("bikeBo", bikeBo);
     	CartItemBO cbo = new CartItemBO();
@@ -91,14 +93,27 @@ public class OrderCotroler extends HttpServlet {
     		session.removeAttribute("itemCartList");
     	}
     	
+    	if(act!= null && act.equals("delete")) {
+    		try {
+    			String orderId = request.getParameter("orderId");
+				oBO.cancelOrder(Integer.parseInt(orderId));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		response.sendRedirect("OrderHistory");
+    		return;
+    	}
+    	
     	if(act!=null && act.equals("createOrder")&& currentUserId!=null && cartItemList!=null) {
     		String pickupPlace = request.getParameter("pickupPlace");
     		String returnPlace = request.getParameter("returnPlace");
     		try {
-//	    		for (CartItem cartItem: cartItemList) {
-//						cbo.createOrder(cartItem.getBikeId(), cartItem.getRentalFee(),cartItem.getPickupDate(),cartItem.getReturnDate(),  Integer.parseInt(currentUserId),pickupPlace , returnPlace);
-//	    		}
-    			cbo.createOrder2(Integer.parseInt(currentUserId), pickupPlace, returnPlace,cartItemList);
+//    			cbo.createOrder2(Integer.parseInt(currentUserId), pickupPlace, returnPlace,cartItemList);
+    			cbo.addMultipleOrdersByOwner(Integer.parseInt(currentUserId), pickupPlace, returnPlace, cartItemList);
 	    		session.removeAttribute("itemCartList");
     		} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -118,7 +133,7 @@ public class OrderCotroler extends HttpServlet {
 				ArrayList<String> bikePhotoInCart = bikeBo.getPhotoByBikeId(Integer.parseInt(bikeToCartId));
 				//TODO set default img
 				String photo = bikePhotoInCart.isEmpty() ? "default.jpg" : bikePhotoInCart.get(0);
-				CartItem cartItem = new CartItem(bike.getBikeId(),bike.getBikeName(),bike.getLicensePlate(),bike.getManufacturingYear(),bike.getBikeLine(),bike.getBikeManufactor(),photo,bike.getDescription(),bike.getPrice(),startDay,endDay);
+				CartItem cartItem = new CartItem(bike.getBikeId(),bike.getBikeName(),bike.getLicensePlate(),bike.getManufacturingYear(),bike.getBikeLine(),bike.getBikeManufactor(),photo,bike.getDescription(),bike.getPrice(),bike.getOwnerId(),startDay,endDay);
 				if(!cbo.checkExists(cartItemList, cartItem)) {
 					cartItemList.add(cartItem);
 					session.setAttribute("itemCartList", cartItemList);	

@@ -122,10 +122,10 @@ public class BikeSubmitController extends HttpServlet {
 			    return;
 			}
 			if(act!= null && act.equals("create")) {
-				Bike bike = new Bike(1,bikeName, licensePlate, Integer.parseInt(manufacturingYear),bikeLine,BikeManufactor,"",description,Long.parseLong( request.getParameter("price")),0,null);
+				Bike bike = new Bike(1,bikeName, licensePlate, Integer.parseInt(manufacturingYear),bikeLine,BikeManufactor,"",description,Long.parseLong( request.getParameter("price")),0,null,currentUser.getUserId());
 				bBO.addBikeWithPhotos(bike, currentUser.getUserId(), uploadedImages);				
 			}else {
-				Bike bike = new Bike(Integer.parseInt(id),bikeName, licensePlate, Integer.parseInt(manufacturingYear),bikeLine,BikeManufactor,"",description,Long.parseLong( request.getParameter("price")),0,null);
+				Bike bike = new Bike(Integer.parseInt(id),bikeName, licensePlate, Integer.parseInt(manufacturingYear),bikeLine,BikeManufactor,"",description,Long.parseLong( request.getParameter("price")),-1,null, currentUser.getUserId());
 				bBO.updateBikeWithPhotos(bike, uploadedImages);
 				session.removeAttribute("uploadedImgs");
 			}
@@ -134,7 +134,6 @@ public class BikeSubmitController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		
 		
 		RequestDispatcher rq = request.getRequestDispatcher("OwnerManagerment?p=bike");

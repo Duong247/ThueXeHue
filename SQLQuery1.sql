@@ -391,7 +391,7 @@ update Bike
 set Status = -2
 where BikeId=?
 
-select * from Slider
+
 
 	insert into Slider(sliderPhoto)
 	values(?);
@@ -403,3 +403,123 @@ SELECT * FROM Message WHERE
 
  insert into Message(sender,reciever,content)
  values(sender,receiver,content)
+
+
+ SELECT o.OrderId, o.OrderDate, o.PickupPlace, o.ReturnPlace, o.Status,
+od.BikeId, b.BikeName, b.LicensePlate, b.ManufacturingYear, b.BikeLine, b.BikeManufactor,
+(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo,
+b.Description, od.RentalFee, od.PickupDate, od.ReturnDate,OwnerId
+FROM [Order] o 
+JOIN OrderDetail od ON o.OrderId = od.OrderId 
+JOIN Bike b ON od.BikeId = b.BikeId
+WHERE o.UserId = 5
+ORDER BY o.OrderDate DESC
+
+select * from [Order]
+
+select * from [User]
+select * from OrderDetail
+select * from Bike where OwnerId=5
+select * from OrderStatus
+select * from BikeStatus
+select * from BikePhoto
+Update Bike
+set Status = 0
+where BikeId=?	
+
+select * from Bike where ownerId=5
+
+select * from [Order] as o join OrderDetail as  od on o.OrderId = od.OrderId
+join Bike as b on b.BikeId = od.BikeId
+where OwnerId=5 and o.Status>=0
+
+SELECT sum( Price*DATEDIFF(DAY, PickupDate, ReturnDate) )as Subtotal
+FROM [Order] AS o
+JOIN OrderDetail AS od ON o.OrderId = od.OrderId
+JOIN Bike AS b ON b.BikeId = od.BikeId
+WHERE b.OwnerId = 5 AND o.Status = 2
+
+select * from Bike
+
+
+select Top 8 *, (SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo
+from Bike as b
+where Status>-2
+order by CreatedTime
+
+SELECT b.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo,CreatedTime,OwnerId
+FROM Bike as b
+where Status>-2
+ORDER BY b.BikeId
+OFFSET (? - 1) * ? ROWS
+FETCH NEXT ? ROWS ONLY
+
+select * from [User]
+
+select * from Bike where OwnerId =18
+select * from [User] where Phone = '1111111111'
+
+SELECT DISTINCT u.*
+FROM [User] u
+WHERE u.Phone IN (
+    SELECT sender FROM Message WHERE receiver = '1111111111'
+    UNION
+    SELECT receiver FROM Message WHERE sender = '11111111111'
+)
+
+WITH Last7Days AS (
+    SELECT CAST(GETDATE() AS DATE) AS OrderDay
+    UNION ALL
+    SELECT DATEADD(DAY, -1, OrderDay)
+    FROM Last7Days
+    WHERE DATEADD(DAY, -1, OrderDay) >= DATEADD(DAY, -6, CAST(GETDATE() AS DATE))
+),
+OwnerOrders AS (
+    SELECT o.OrderId, o.OrderDate, od.RentalFee, od.PickupDate, od.ReturnDate
+    FROM [Order] o
+    JOIN OrderDetail od ON o.OrderId = od.OrderId
+    JOIN Bike b ON od.BikeId = b.BikeId
+    WHERE o.Status = 2 AND b.OwnerId = 5
+)
+SELECT 
+    FORMAT(d.OrderDay, 'dddd', 'en-US') AS DayLabel, 
+    ISNULL(SUM(oo.RentalFee * 
+        (DATEDIFF(DAY, oo.PickupDate, oo.ReturnDate))
+    ), 0) AS TotalRevenue
+FROM Last7Days d
+LEFT JOIN OwnerOrders oo ON CAST(oo.OrderDate AS DATE) = d.OrderDay
+GROUP BY d.OrderDay
+ORDER BY d.OrderDay;
+
+select * from Bike
+select * from [Order];
+
+
+WITH Last7Days AS (
+    SELECT CAST(GETDATE() AS DATE) AS OrderDay
+    UNION ALL
+    SELECT DATEADD(DAY, -1, OrderDay)
+    FROM Last7Days
+    WHERE DATEADD(DAY, -1, OrderDay) >= DATEADD(DAY, -6, CAST(GETDATE() AS DATE))
+)
+SELECT 
+    FORMAT(d.OrderDay, 'dddd', 'en-US') AS DayLabel, 
+    ISNULL(SUM(od.RentalFee * DATEDIFF(DAY, od.PickupDate, od.ReturnDate)), 0) AS TotalRevenue
+FROM Last7Days d
+LEFT JOIN [Order] o 
+    ON CAST(o.OrderDate AS DATE) = d.OrderDay AND o.Status = 2
+LEFT JOIN OrderDetail od 
+    ON o.OrderId = od.OrderId
+LEFT JOIN Bike b 
+    ON od.BikeId = b.BikeId
+WHERE b.OwnerId = 5
+GROUP BY d.OrderDay
+ORDER BY d.OrderDay;
+
+
+SELECT * FROM BikeStatus
+
+select* from Bike
+
+delete from Bike
+where BikeId=?

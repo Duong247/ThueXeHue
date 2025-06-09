@@ -1,10 +1,12 @@
 package MessageModal;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import CartItemModal.CartItem;
+import UserModal.User;
 import ketNoiModal.KetNoi;
 
 public class MessageDAO {
@@ -45,4 +47,50 @@ public class MessageDAO {
 	    return list;
 		
 	}
+	
+	public ArrayList<User> getChatUsers(String myPhone) throws Exception {
+	    ArrayList<User> users = new ArrayList<>();
+	    PreparedStatement cmd = null;
+	    ResultSet rs = null;
+	    KetNoi kn = new KetNoi();
+
+	    try {
+	        kn.ketnoi();
+
+	        String sql = """
+	            SELECT DISTINCT u.*
+	            FROM [User] u
+	            WHERE u.Phone IN (
+	                SELECT sender FROM Message WHERE receiver = ?
+	                UNION
+	                SELECT receiver FROM Message WHERE sender = ?
+	            )
+	        """;
+
+	        cmd = kn.cn.prepareStatement(sql);
+	        cmd.setString(1, myPhone);
+	        cmd.setString(2, myPhone);
+	        rs = cmd.executeQuery();
+
+	        while (rs.next()) {
+	            int userId = rs.getInt("UserId");
+	            String fullname = rs.getString("UserName");
+	            String phone = rs.getString("Phone");
+	            String photo = rs.getString("Photo");
+	            Date dateOfBirth = rs.getDate("DateOfBirth");
+	            String address = rs.getString("Address");
+	            String password = rs.getString("Password");
+	            int role = rs.getInt("Role");
+
+	            users.add(new User(userId, fullname, phone, password, dateOfBirth, address, photo, role));
+	        }
+
+	    } finally {
+	        cmd.close();
+	        kn.cn.close();
+	    }
+
+	    return users;
+	}
+
 }

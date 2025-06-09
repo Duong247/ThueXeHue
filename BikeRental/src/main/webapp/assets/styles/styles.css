@@ -102,6 +102,9 @@ ul{
   object-fit:contain; 
 }
 
+.card-text{
+	min-height: 48px;
+}
 
 .cover-rating{
   text-align:center;
@@ -157,6 +160,9 @@ ul{
 .left-side-login{
   /* #f6f6f6 */
   /* background: linear-gradient(161deg,rgba(144, 247, 236, 1) 18%, rgba(50, 204, 188, 1) 92%); */
+  /*background-color: #3454cf;*/
+  background: #cdf7f7;
+  background: linear-gradient(161deg,rgba(205, 247, 247, 1) 0%, rgba(52, 84, 207, 1) 82%);
   border-radius: 20px 0 0 20px;
   background-color: #ccc;
 }
@@ -189,7 +195,7 @@ ul{
 }
 
 .head-text-cover{
-  margin: 116px auto;
+  margin: 154px auto;
 }
 
 .mini-ava{

@@ -53,7 +53,7 @@
 				      <th scope="col" style="width: 80px;">Ảnh</th>
 				      <th scope="col">Thông tin xe</th>
 				      <th scope="col">Trạng thái</th>
-				      <th scope="col" style="width: 80px;">Thao tác</th>
+				      <th scope="col" style="width: 108px;">Thao tác</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -74,7 +74,7 @@
 					      
 					      <c:choose>
 							  <c:when test="${item.status == -1}">
-							    <p class="btn btn-warning">Đang chờ duyệt</p>
+							    <p class="btn btn-warning" style="color: #fff">Đang chờ duyệt</p>
 							  </c:when>
 							  
 							  <c:when test="${item.status == 1}">
@@ -91,11 +91,12 @@
 					      <td>
 						      <form action="OwnerManagerment" method="post">
 						      	<input hidden name="id" value="${item.bikeId }">
-						      	<input hidden name="actStatus" value="deny">
+						      	<input hidden  >
 						      	<input hidden name="p" value="adminBike">
-						      	<button type="submit" class="btn btn-danger"><i class="fa-solid fa-ban"></i></button>
+						      	<button ${item.status==-2||item.status==0?'hidden':'' } type="submit" class="btn btn-danger" name="actStatus"  value="deny"><i class="fa-solid fa-ban"></i></button>
+					      		<button ${item.status!=-1?'hidden':'' } type="submit" class="btn btn-success" name="actStatus"  value="acp"><i class="fa-solid fa-check"></i></i></button>
+					      		<a href="BikeDetail?id=${item.bikeId}&act=view" type="button" class="btn btn-info mt-1"><i style="color: #fff" class="fa-solid fa-eye"></i></a>
 						      </form>
-					      	<a href="BikeDetail?id=${item.bikeId}&act=view" type="button" class="btn btn-info"><i style="color: #fff" class="fa-solid fa-eye"></i></a>
 					      </td>
 					    </tr>				  
 					  </c:forEach>

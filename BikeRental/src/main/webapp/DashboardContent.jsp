@@ -16,14 +16,14 @@
 			<p>Lượt thuê</p>
 			<i class="fa-solid fa-person icon-title"></i>
 		</div>
-		<h4 style="font-weight: 600">36</h4>
+		<h4 style="font-weight: 600">${BikeInOrderCount }</h4>
 	</div>
 	<div class="card dashboard-card">
 		<div class="card-title">
-			<p>Doanh thu tháng</p>
+			<p>Tổng doanh thu</p>
 			<i class="fa-solid fa-money-bill icon-title"></i>
 		</div>
-		<h4 style="font-weight: 600">36</h4>
+		<h4 style="font-weight: 600"><span class="currency">${totalMoney }</span> VND </h4>
 	</div>
 </div>
 

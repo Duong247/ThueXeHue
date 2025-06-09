@@ -28,8 +28,9 @@ public class BikeDAO {
 			String description = rs.getString("Description");
 			Long price = rs.getLong("price");
 			String photo= rs.getString("Photo");
+			int ownerId = rs.getInt("ownerId");
 			Date CreatedTime = rs.getDate("CreatedTime");
-			bikes.add(new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime));
+			bikes.add(new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime,ownerId));
 		}
 		rs.close();
 		kn.cn.close();
@@ -41,7 +42,9 @@ public class BikeDAO {
 		KetNoi kn = new KetNoi();
 		kn.ketnoi();
 		String sql="select Top 8 *, (SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo\r\n"
-				+ "from Bike as b";
+				+ "from Bike as b\r\n"
+				+ "where Status>-2\r\n"
+				+ "order by CreatedTime";
 		PreparedStatement cmd= kn.cn.prepareStatement(sql);
 		ResultSet rs= cmd.executeQuery();
 		while (rs.next()) {
@@ -56,7 +59,8 @@ public class BikeDAO {
 			Long price = rs.getLong("price");
 			String photo= rs.getString("Photo");
 			Date CreatedTime = rs.getDate("CreatedTime");
-			bikes.add(new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime));
+			int ownerId = rs.getInt("ownerId");
+			bikes.add(new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime,ownerId));
 		}
 		rs.close();
 		kn.cn.close();
@@ -86,7 +90,8 @@ public class BikeDAO {
 			Long price = rs.getLong("price");
 			String photo= rs.getString("Photo");
 			Date CreatedTime = rs.getDate("CreatedTime");
-			bike =new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime);
+			int ownerId = rs.getInt("ownerId");
+			bike =new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime,ownerId);
 		}
 		rs.close();
 		kn.cn.close();
@@ -99,12 +104,12 @@ public class BikeDAO {
 		ArrayList<Bike> bikes = new ArrayList<Bike>();
 		KetNoi kn = new KetNoi();
 		kn.ketnoi();
-		String sql="\r\n"
-				+ "SELECT b.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo,CreatedTime\r\n"
+		String sql="SELECT b.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo,CreatedTime,OwnerId\r\n"
 				+ "FROM Bike as b\r\n"
+				+ "where Status>-2\r\n"
 				+ "ORDER BY b.BikeId\r\n"
 				+ "OFFSET (? - 1) * ? ROWS\r\n"
-				+ "FETCH NEXT ? ROWS ONLY;";
+				+ "FETCH NEXT ? ROWS ONLY";
 		PreparedStatement cmd= kn.cn.prepareStatement(sql);
 		cmd.setInt(1, page);
 		cmd.setInt(2, pagesize);
@@ -122,7 +127,8 @@ public class BikeDAO {
 			Long price = rs.getLong("price");
 			String photo= rs.getString("Photo");
 			Date CreatedTime = rs.getDate("CreatedTime");
-			bikes.add(new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime));
+			int ownerId = rs.getInt("ownerId");
+			bikes.add(new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime,ownerId));
 		}
 		rs.close();
 		kn.cn.close();
@@ -184,7 +190,7 @@ public class BikeDAO {
 		ArrayList<Bike> bikes = new ArrayList<Bike>();
 		KetNoi kn = new KetNoi();
 		kn.ketnoi();
-		String sql="select Top 8 Bike.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,Photo,CreatedTime\r\n"
+		String sql="select Top 8 Bike.BikeId,BikeName,LicensePlate, ManufacturingYear,BikeLine,OwnerId,BikeManufactor,Status,Description,Price,Photo,CreatedTime,OwnerId\r\n"
 				+ "from Bike left join BikePhoto on Bike.BikeId = BikePhoto.BikeId\r\n"
 				+ "where BikeLine =(\r\n"
 				+ "				select BikeLine\r\n"
@@ -206,7 +212,8 @@ public class BikeDAO {
 			Long price = rs.getLong("price");
 			String photo= rs.getString("Photo");
 			Date CreatedTime = rs.getDate("CreatedTime");
-			bikes.add(new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime));
+			int ownerId = rs.getInt("ownerId");
+			bikes.add(new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime,ownerId));
 		}
 		rs.close();
 		kn.cn.close();
@@ -217,7 +224,7 @@ public class BikeDAO {
 		ArrayList<Bike> bikes = new ArrayList<Bike>();
 		KetNoi kn = new KetNoi();
 		kn.ketnoi();
-		String sql="select b.BikeId,BikeName,LicensePlate,ManufacturingYear,BikeLine,BikeManufactor,Description,Price,Status,CreatedTime ,\r\n"
+		String sql="select b.BikeId,BikeName,LicensePlate,ManufacturingYear,BikeLine,BikeManufactor,Description,Price,Status,CreatedTime ,b.OwnerId,\r\n"
 				+ "(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo\r\n"
 				+ "from [User] left join Bike as b on [User].UserId = b.OwnerId\r\n"
 				+ "where [User].UserId = ?";
@@ -236,7 +243,8 @@ public class BikeDAO {
 			Long price = rs.getLong("price");
 			String photo= rs.getString("Photo");
 			Date CreatedTime = rs.getDate("CreatedTime");
-			bikes.add(new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime));
+			int ownerId = rs.getInt("ownerId");
+			bikes.add(new Bike(bikeId,bikeName,licensePlate,manufacturingYear,BikeLine,BikeManufactor,photo,description,price,status,CreatedTime,ownerId));
 		}
 		rs.close();
 		kn.cn.close();
@@ -263,7 +271,7 @@ public class BikeDAO {
 	        psBike.setString(4, bike.getBikeLine());
 	        psBike.setInt(5, currentUserId);
 	        psBike.setString(6, bike.getBikeManufactor());
-	        psBike.setInt(7, bike.getStatus());
+	        psBike.setInt(7, -1);
 	        psBike.setString(8, bike.getDescription());
 	        psBike.setDouble(9, bike.getPrice());
 
@@ -543,8 +551,8 @@ public class BikeDAO {
 	    kn.ketnoi();
 
 	    StringBuilder sql = new StringBuilder(
-	        "SELECT *, (SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo " +
-	        "FROM Bike AS b WHERE BikeLine LIKE ? AND BikeManufactor LIKE ? AND BikeName LIKE ?"
+	        "SELECT *, (SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo \r\n"
+	        + "FROM Bike AS b WHERE Status>-2 AND BikeLine LIKE ? AND BikeManufactor LIKE ? AND BikeName LIKE ?"
 	    );
 
 	    if (status != -99) {
@@ -580,15 +588,38 @@ public class BikeDAO {
 	        Long price = rs.getLong("price");
 	        String photo = rs.getString("Photo");
 	        Date createdTime = rs.getDate("CreatedTime");
-
-	        list.add(new Bike(bikeId, name, licensePlate, manufacturingYear, BikeLine, BikeManufactor, photo, description, price, bikeStatus, createdTime));
+	        int ownerId = rs.getInt("ownerId");
+	        list.add(new Bike(bikeId, name, licensePlate, manufacturingYear, BikeLine, BikeManufactor, photo, description, price, bikeStatus, createdTime,ownerId));
 	    }
 
 	    rs.close();
 	    kn.cn.close();
 	    return list;	
 	}
-
+	
+	public boolean acceptBike(int bikeId) throws Exception{
+		KetNoi kn = new KetNoi();
+	    kn.ketnoi();
+	    String sql="Update Bike\r\n"
+	    		+ "set Status = 0\r\n"
+	    		+ "where BikeId=?	";
+	    PreparedStatement cmd = kn.cn.prepareStatement(sql);
+	    cmd.setInt(1, bikeId);
+	    int rs = cmd.executeUpdate();
+	    return rs>0;
+	}
+	
+	
+	public boolean deletetBike(int bikeId) throws Exception{
+		KetNoi kn = new KetNoi();
+	    kn.ketnoi();
+	    String sql="delete from Bike\r\n"
+	    		+ "where BikeId=?	";
+	    PreparedStatement cmd = kn.cn.prepareStatement(sql);
+	    cmd.setInt(1, bikeId);
+	    int rs = cmd.executeUpdate();
+	    return rs>0;
+	}
 
 
 	

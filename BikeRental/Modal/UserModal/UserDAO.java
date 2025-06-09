@@ -189,7 +189,7 @@ public class UserDAO {
 		String sql ="select * from [User]";
 		PreparedStatement cmd= kn.cn.prepareStatement(sql);
 		ResultSet rs= cmd.executeQuery();
-		if(rs.next()) {
+		while(rs.next()) {
 			int userId = rs.getInt("UserId");
 			String fullname = rs.getString("UserName");
 			String phone = rs.getString("Phone");
@@ -296,7 +296,21 @@ public class UserDAO {
 	    return (int) Math.ceil((double) total / pageSize);
 	}
 	
-	
+	public String getUserName(String phone) throws Exception {
+		String phoneDB = "";
+		KetNoi kn = new KetNoi();
+		kn.ketnoi();
+		String sql ="select * from [User] where Phone = ?";
+		PreparedStatement cmd= kn.cn.prepareStatement(sql);
+		cmd.setString(1, phone);
+		ResultSet rs= cmd.executeQuery();
+		if(rs.next()) {
+			phoneDB = rs.getString("UserName");
+		}
+		rs.close();
+		kn.cn.close();
+		return phoneDB;
+	}
 
 	
 

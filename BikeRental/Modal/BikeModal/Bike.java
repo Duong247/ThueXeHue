@@ -1,4 +1,4 @@
-package BikeModal;
+ package BikeModal;
 
 import java.sql.Date;
 
@@ -14,25 +14,30 @@ public class Bike {
 	private Long Price;
 	private int status;
 	private Date CreateTime;
+	private int ownerId;
 	public Bike() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	public Bike(int bikeId, String bikeName, String licensePlate, int manufacturingYear, String bikeLine,
-			String bikeManufactor, String photo, String description, Long price, int status, Date createTime) {
+			String bikeManufactor, String photo, String description, Long price, int status, Date createTime,
+			int ownerId) {
 		super();
 		this.bikeId = bikeId;
 		this.bikeName = bikeName;
 		this.licensePlate = licensePlate;
 		this.manufacturingYear = manufacturingYear;
-		BikeLine = bikeLine;
-		BikeManufactor = bikeManufactor;
-		Photo = photo;
-		Description = description;
-		Price = price;
+		this.BikeLine = bikeLine;
+		this.BikeManufactor = bikeManufactor;
+		this.Photo = photo;
+		this.Description = description;
+		this.Price = price;
 		this.status = status;
-		CreateTime = createTime;
+		this.CreateTime = createTime;
+		this.ownerId = ownerId;
 	}
+
 	public int getBikeId() {
 		return bikeId;
 	}
@@ -94,8 +99,16 @@ public class Bike {
 	public Date getCreateTime() {
 		return CreateTime;
 	}
-	
 
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+	
+	
 
 	
 	

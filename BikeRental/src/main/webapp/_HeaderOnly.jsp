@@ -19,19 +19,12 @@
               <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                   <li class="nav-item nav-item-header">
-                    <a class="nav-link " aria-current="page" href="BikeControler">Thuê Xe</a>
+                    <a class="nav-link " aria-current="page" href="BikeControler"><i class="fa-solid fa-motorcycle"></i> Thuê Xe</a>
                   </li>
                   <li ${currentUserInf==null?'hidden':'' } class="nav-item nav-item-header dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                      aria-expanded="false">
-                      Blog
+                    <a class="nav-link" href="private_chat.jsp" role="button" >
+                      <i class="fa-solid fa-comment"></i> Nhắn tin
                     </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
                   </li>
                   <li ${currentUserInf==null?'hidden':'' } class="nav-item nav-item-header">
                     <a class="nav-link" href="Order"><i class="fa-solid fa-cart-shopping"></i>Giỏ hàng</a>

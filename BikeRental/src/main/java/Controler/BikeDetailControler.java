@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import BikeModal.BikeBo;
+import UserModal.User;
 import UserModal.UserBO;
 
 /**
@@ -38,6 +40,9 @@ public class BikeDetailControler extends HttpServlet {
     	UserBO userBo = new UserBO();
     	String bikeId = request.getParameter("id");
     	String act = request.getParameter("act");
+    	HttpSession session = request.getSession();
+    	User currentUser = (User) session.getAttribute("currentUserInf");
+    	request.setAttribute("curUser", currentUser );
     	if (act!=null) {
     		request.setAttribute("act",act);    		
     	}

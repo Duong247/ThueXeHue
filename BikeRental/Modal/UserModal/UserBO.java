@@ -85,4 +85,8 @@ public class UserBO {
     	return userDao.getUserPageCountByKeyword(keyword, pageSize);
     }
     
+    public String getName(String phone) throws Exception {
+    	return userDao.getUserName(phone);
+    }
+    
 }

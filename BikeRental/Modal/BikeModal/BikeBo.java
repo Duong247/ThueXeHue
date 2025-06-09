@@ -92,4 +92,12 @@ public class BikeBo {
 		return bikeDao.updateDenyBikestatus(bikeId);
 	}
 	
+	public boolean acceptBike(int bikeId) throws Exception{
+		return bikeDao.acceptBike(bikeId);
+	}
+	
+	public boolean deletetBike(int bikeId) throws Exception{
+		return bikeDao.deletetBike(bikeId);
+	}
+	
 }

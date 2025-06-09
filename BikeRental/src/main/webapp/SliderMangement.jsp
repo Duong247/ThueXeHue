@@ -19,7 +19,7 @@
 				<label for="imgFile" style="display: inline-block;
 									        padding: 10px 20px;
 									        cursor: pointer;
-									        background-color: #007bff;
+									        background-color: #3454cf;
 									        color: white;
 									        border-radius: 5px;">
 	      			<i class="fa-solid fa-upload"></i> Thêm ảnh
@@ -31,7 +31,7 @@
 		<div class="d-flex" style="overflow-x: scroll; white-space: nowrap; ">
 			<c:forEach var="photoItem" items="${listPhoto}" >
 				<div class="card-body-order" style="position: relative; display: inline-block;">
-					<a style="position: absolute;top:6px;right:10px;padding: 3px 8px;background-color: #ccc; border-radius: 15px;opacity: 0.5;cursor: pointer; ">
+					<a  style="position: absolute;top:6px;right:10px;padding: 3px 8px;background-color: #ccc; border-radius: 15px;opacity: 0.5;cursor: pointer; " onclick="return deleteConfirm() ">
 						<i class="fa-solid fa-x"></i>
 					</a>
 					<img src="${photoItem.photo}" class="img-thumbnail" style="min-width: 300px;max-width: 400px">
@@ -50,6 +50,10 @@
         form.submit();
       }
     });
+    
+    function deleteConfirm(){
+    	return confirm("Bạn có chắc chắn muốn xóa ảnh này?")
+    }
   </script>
 
 

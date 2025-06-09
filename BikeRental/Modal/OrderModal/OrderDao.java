@@ -17,7 +17,7 @@ public class OrderDao {
 	    String sql = "SELECT o.OrderId, o.OrderDate, o.PickupPlace, o.ReturnPlace, o.Status, " +
 	             "od.BikeId, b.BikeName, b.LicensePlate, b.ManufacturingYear, b.BikeLine, b.BikeManufactor, " +
 	             "(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo, " +
-	             "b.Description, od.RentalFee, od.PickupDate, od.ReturnDate " +
+	             "b.Description, od.RentalFee, od.PickupDate, od.ReturnDate,OwnerId " +
 	             "FROM [Order] o " +
 	             "JOIN OrderDetail od ON o.OrderId = od.OrderId " +
 	             "JOIN Bike b ON od.BikeId = b.BikeId " +
@@ -52,6 +52,7 @@ public class OrderDao {
 	            rs.getString("Photo"),
 	            rs.getString("Description"),
 	            rs.getLong("RentalFee"),
+	            rs.getInt("OwnerId"),
 	            rs.getTimestamp("PickupDate"),
 	            rs.getTimestamp("ReturnDate")
 	        );
@@ -74,7 +75,7 @@ public class OrderDao {
 	    String sql = "SELECT o.OrderId, o.OrderDate, o.PickupPlace, o.ReturnPlace, o.Status, " +
 	                 "od.BikeId, b.BikeName, b.LicensePlate, b.ManufacturingYear, b.BikeLine, b.BikeManufactor, " +
 	                 "(SELECT TOP 1 bp.Photo FROM BikePhoto bp WHERE bp.BikeId = b.BikeId ORDER BY bp.PhotoId ASC) AS Photo, " +
-	                 "b.Description, od.RentalFee, od.PickupDate, od.ReturnDate " +
+	                 "b.Description, od.RentalFee, od.PickupDate, od.ReturnDate,OwnerId " +
 	                 "FROM [Order] o " +
 	                 "JOIN OrderDetail od ON o.OrderId = od.OrderId " +
 	                 "JOIN Bike b ON od.BikeId = b.BikeId " +
@@ -110,6 +111,7 @@ public class OrderDao {
 	            rs.getString("Photo"),
 	            rs.getString("Description"),
 	            rs.getLong("RentalFee"),
+	            rs.getInt("OwnerId"),
 	            rs.getTimestamp("PickupDate"),
 	            rs.getTimestamp("ReturnDate")
 	        );
@@ -125,7 +127,40 @@ public class OrderDao {
 	}
 
 
+	public boolean cancelOrder(int orderId) throws Exception{
+		KetNoi kn = new KetNoi();
+	    kn.ketnoi();
+	    String sql="Update [Order]\r\n"
+	    		+ "set Status = -1\r\n"
+	    		+ "where OrderId=?";
+	    PreparedStatement cmd = kn.cn.prepareStatement(sql);
+	    cmd.setInt(1, orderId);
+	    int rs = cmd.executeUpdate();
+	    return rs>0;
+	}
+	public boolean acceptOrder(int orderId) throws Exception{
+		KetNoi kn = new KetNoi();
+	    kn.ketnoi();
+	    String sql="Update [Order]\r\n"
+	    		+ "set Status = 1\r\n"
+	    		+ "where OrderId=?";
+	    PreparedStatement cmd = kn.cn.prepareStatement(sql);
+	    cmd.setInt(1, orderId);
+	    int rs = cmd.executeUpdate();
+	    return rs>0;
+	}
 	
+	public boolean completeOrder(int orderId) throws Exception{
+		KetNoi kn = new KetNoi();
+	    kn.ketnoi();
+	    String sql="Update [Order]\r\n"
+	    		+ "set Status = 2\r\n"
+	    		+ "where OrderId=?";
+	    PreparedStatement cmd = kn.cn.prepareStatement(sql);
+	    cmd.setInt(1, orderId);
+	    int rs = cmd.executeUpdate();
+	    return rs>0;
+	}
 	
 
 }

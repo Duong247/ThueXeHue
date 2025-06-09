@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import MessageModal.Message;
 import MessageModal.MessageBO;
+import UserModal.UserBO;
 
 
 @WebServlet("/private-chat")
@@ -31,7 +32,7 @@ public class PrivateChatServlet extends HttpServlet {
     	response.setCharacterEncoding("UTF-8");
     	String username = request.getParameter("user");
         String withUser = request.getParameter("with");
-
+        UserBO ubo = new UserBO();
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
@@ -46,9 +47,16 @@ public class PrivateChatServlet extends HttpServlet {
         if(messages!=null) {
         	for (Message msg : messages) {
         		if (msg.getFrom().equals(username)) {
-        			out.println("<p style='text-align:right; color:blue'><b>Bạn:</b> " + msg.getContent() + "</p>");
+        			out.println("<p style='text-align:right; color:blue; background-color: #d0ebff; color: #000;padding: 10px 15px;\r\n"
+        					+ "    border-radius: 15px;max-width: 70%;word-wrap: break-word;margin-left:auto;display:block;'><b>Bạn:</b> " + msg.getContent() + "</p>");
         		} else {
-        			out.println("<p style='text-align:left; color:green'><b>" + msg.getFrom() + ":</b> " + msg.getContent() + "</p>");
+        			try {
+						out.println("<p style='text-align:left; color:green;background-color: #dee2e6; color: #000;padding: 10px 15px;\r\n"
+								+ " border-radius: 15px;max-width: 70%;word-wrap: break-word;margin-left:0;display:block;'><b>" + ubo.getName(msg.getFrom())  + ":</b> " + msg.getContent() + "</p>");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
         		}
         		count++;
         	}        	

@@ -60,7 +60,7 @@
 	                <input type="text" class="form-control" name="repeatPassword" id="repeatPassword" value="${repeatPassword}">
 	                <span style="color:red;">${rppwErr}</span>
 	            </div>
-	            <button type="submit" class="btn btn-primary" name="act"  style="width: 100%;" Value="submit">Đăng ký</button>
+	            <button type="submit" class="btn btn-primary" name="act"  style="width: 100%;    background-color: #3454cf;" Value="submit">Đăng ký</button>
 	          </form>
 	    </div>
 	</div>

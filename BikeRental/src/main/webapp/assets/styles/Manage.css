@@ -98,7 +98,7 @@ li >a{
 }
 .upper-bike-inf{
 	display: flex;
-	
+	min-height: 131px;
 	align-items: flex-start;
 }
 

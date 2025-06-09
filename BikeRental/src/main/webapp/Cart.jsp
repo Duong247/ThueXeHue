@@ -16,7 +16,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.5/dist/css/tempus-dominus.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    
+        <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- autoNumeric -->
+	<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.6.0/dist/autoNumeric.min.js"></script>
+	<link rel="icon" href="./assets/img/icon2.png" type="image/x-icon">
+	<title>HueBikeRent</title>
     <script src="https://kit.fontawesome.com/3ecdd9878f.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.5/dist/js/tempus-dominus.min.js"></script>
@@ -33,7 +38,7 @@
             <div class="col-md-9 col-12" >
                 <div class="head-col text-left d-flex justify-content-between" style="margin-bottom: 0">
                     <h3> Đơn hàng của bạn</h3>
-                    <a href="OrderHistory" style="padding: 5px; text-decoration: none"><i class="fa-solid fa-clock-rotate-left" style="padding: 5px"></i>Lịch sử mua hàng</a>
+                    <a href="OrderHistory" style="padding: 5px; text-decoration: none;color: #3454cf"><i class="fa-solid fa-clock-rotate-left" style="padding: 5px"></i>Lịch sử thuê</a>
                 </div>
                 <hr style="border-color: #000;">
                 <div class="cart-content">
@@ -46,7 +51,7 @@
                             <th style="width: 120px;">Ảnh</th>
                             <th>Thông tin xe</th>
                             <th style="width: 40%">Ngày nhận/trả xe</th>
-                            <th>Giá / ngày</th>
+                            <th>Tổng</th>
                             <th style="width: 30px;">Thao tác</th>
                           </tr>
                         </thead>
@@ -67,6 +72,7 @@
                                                 <li><b>Hãng xe:</b>${item.bikeManufactor}</li>
                                                 <li><b>Biển số:</b>${item.licensePlate}</li>
                                                 <li><b>Năm sản xuất:</b>${item.manufacturingYear}</li>
+                                                <li><b>Giá thuê:</b><span class="currency">${item.rentalFee}</span>  VND</li>
                                             </ul>
                                         </td>
                                         <td>
@@ -96,7 +102,7 @@
 						                     </div>
                                         </form>
                                         </td>
-                                        <td>${item.rentalFee} VND</td>
+                                        <td><span class="currency">${item.getSubtotal()}</span>  VND</td>
                                         <td>
                                             <form method="post" action="Order">
                                                 <input type="hidden" name="bikeToCartId" value="${item.bikeId}">
@@ -140,7 +146,7 @@
                     </div>
                     
                     <div class="text-end">
-                        <button type="submit" class="btn btn-primary">Đặt xe</button>
+                        <button type="submit" class="btn btn-primary" style="width: 150px; background-color:#3454cf ">Đặt xe</button>
                     </div>
                   </form>
             </div>
@@ -179,6 +185,18 @@
           });
       });
     </script>
+    
+    
+    <script type="text/javascript">
+		$(document).ready(function () {
+		    AutoNumeric.multiple('.currency', {
+		        digitGroupSeparator: ',',
+		        decimalPlaces: 0, // không có phần thập phân
+		        modifyValueOnWheel: false
+		    });
+		});
+	
+	</script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     

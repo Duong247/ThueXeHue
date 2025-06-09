@@ -22,8 +22,6 @@
       <div class="carousel-item ${loop.first ? 'active' : ''}" data-bs-interval="${loop.count * 1000}">
         <img src="${photoSlider.photo}" class="d-block w-100 slider-img" alt="Slide ${loop.count}">
         <div class="carousel-caption d-none d-md-block" style="color: #fff;">
-          <h5>Slide ${loop.count}</h5>
-          <p>Ảnh quảng cáo số ${loop.count}</p>
         </div>
       </div>
     </c:forEach>
@@ -74,29 +72,45 @@
           	<c:forEach var="item" items="${allBikes}" >
           		<div class="col-md-3 col-6" >
 	              <div class="card" style="width: 100%;">
-	                  <img src="./assets/img/motobikes/${item.photo}" class="card-img-top" alt="...">
+	                  <img src="${item.photo!=null?item.photo:'assets/img/icon2.png'}" class="card-img-top" alt="...">
 	                  <div class="card-body text-left">
 	                    <div class="bike-status-group">
 	                      <p class="bike-status-${item.status==1?"available":"unavailable" }">${item.status==1?"Sẵn sàng":"Chưa sẵn sàng" }</p>
 	                    </div>
 	                    <h5 class="card-title">${item.bikeName}</h5>
 	                    <p class="card-text">${item.description}</p>
-	                    <div class="cover-rating">
-	                      <p><i class="fa-solid fa-star" style="padding: 3px;"></i>5.0</p>
-	                    </div>
-	                    <p style="line-height: 14px; color: #024bb3;"><i class="fa-solid fa-location-dot"></i> An Hòa</p>
-	                    <p style="line-height: 14px; color: #ba2b2b;font-weight: 600; font-size: 18px;"><i class="fa-solid fa-money-bill"></i> ${item.price} vnd/ngày</p>
-	                    <a href="BikeDetail?id=${item.bikeId}" class="btn btn-primary" style="width: 100%;">Chi tiết</a>
+	                    <p style="line-height: 14px; color: #ba2b2b;font-weight: 600; font-size: 18px;"><i class="fa-solid fa-money-bill"></i> <span class="currency"> ${item.price}</span> vnd/ngày</p>
+	                    <a href="BikeDetail?id=${item.bikeId}" class="btn btn-primary" style="width: 100%;    background-color: #3454cf;">Chi tiết</a>
 	                  </div>
 	                </div>
 	            </div>
           	</c:forEach>
           </div>
+	        <div class="text-center mt-3">
+	          <a href="BikeControler" style="color:#3454cf;">Xem tất cả...</a>
+	        </div>
+	        <hr style="width: 50%;margin: 35px auto">
+	        <div>
+	        	<div class="text-center"> 
+		        	<h3 class="mb-5">Giới thiệu</h3>
+		        	<p style="width: 70%;margin: auto	">Chào mừng bạn đến với nền tảng HueBikeRent – nơi kết nối nhu cầu thuê và cho thuê xe một cách nhanh chóng và tiện lợi. Bạn có thể dễ dàng tìm kiếm chiếc xe phù hợp để di chuyển hoặc đăng xe của mình để cho thuê khi không sử dụng. Chúng tôi cam kết mang đến trải nghiệm an toàn, minh bạch và tối ưu cho cả người thuê lẫn chủ xe.</p>
+		        </div>
+	        </div>
+	        <hr style="width: 50%;margin: 35px auto">
+	        <div>
+	        	<div class="text-center"> 
+		        	<h3 class="mb-5">Tham gia cùng chúng tôi</h3>
+		        	<p style="width: 70%;margin: auto">Trở thành người kinh doanh chỉ với một nút bấm</p>
+		        	<a href="" type="button" class="btn btn-outline-primary" onclick="return OwnerConfirm()">Bắt đầu ngay</a>
+		        </div>
+	        </div>
         </div>
-        <div class="text-center mt-3">
-          <a href="BikeControler">Xem tất cả...</a>
-        </div>
+        
     </div>
 
-
+<script type="text/javascript">
+	function OwnerConfirm() {
+		confirm("Bạn sẽ trở thành người cho thuê xe, chắc chắn chứ");
+	}	
+</script>
 <%@include file="_Footer.jsp"%>

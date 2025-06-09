@@ -14,4 +14,16 @@ public class OrderBo {
 		return ODAO.getOrdersByOwnerId(ownerId);
 	}
 	
+	public boolean cancelOrder(int orderId) throws Exception{
+		return ODAO.cancelOrder(orderId);
+	}
+	
+	public boolean acceptOrder(int orderId) throws Exception{
+		return ODAO.acceptOrder(orderId);
+	}
+	
+	public boolean completeOrder(int orderId) throws Exception{
+		return ODAO.completeOrder(orderId);
+	}
+	
 }

@@ -22,8 +22,8 @@
 				    <tr>
 				      <th scope="col" style="width: 80px;">#</th>
 				      <th scope="col" style="width: 80px;">Ảnh</th>
-				      <th scope="col">Thông người dùng</th>
-				      <th scope="col">Trạng thái</th>
+				      <th scope="col">Thông tin người dùng</th>
+				      <th scope="col">Vai trò</th>
 				      <th scope="col" style="width: 80px;">Thao tác</th>
 				    </tr>
 				  </thead>
@@ -31,14 +31,29 @@
 					  <c:forEach var="item" items="${listUser}" varStatus="loop">
 					    <tr>
 					      <th scope="row" style="vertical-align: middle !important;">${((currentPage - 1) * 15) + loop.index + 1}</th>
-					      <td> <img src="${item.getPhoto()!=null?item.getPhoto():'./assets/img/logo2.png'}" class="rounded d-block" style="width: 80px;object-fit: contain"></td>
+					      <td> <img src="${item.getPhoto()!=null?item.getPhoto():'./assets/img/avaUsers/noava.jpg'}" class="rounded d-block" style="width: 80px;object-fit: contain"></td>
 					      <td>
 					      	<strong>${item.getUserName()}</strong> <br/>
 		                    Ngày sinh: ${item.getDateOfBirth()}<br/>
 		                    Số điện thoại: ${item.getPhone()}
 					      </td>
-					      <td>${item.getRole() }</td>
-					      <td>@mdo</td>
+					      <td>
+					      	<c:choose>
+					      		<c:when test="${item.getRole()==1 }">
+					      			<p class="btn btn-secondary">Khách hàng</p>
+					      		</c:when>
+					      		<c:when test="${item.getRole()==2 }">
+					      			<p class="btn btn-light">Chủ xe</p>
+					      		</c:when>
+					      		<c:when test="${item.getRole()==0 }">
+					      			<p class="btn btn-btn-outline-secondary">Admin</p>
+					      		</c:when>
+					      		<c:otherwise>
+					      			<p class="btn btn-danger"> Bị khóa</p>
+					      		</c:otherwise>
+					      	</c:choose>
+					      </td>
+					      <td><button type="submit" class="btn btn-danger" name="actStatus"  value="deny"><i class="fa-solid fa-ban"></i></button></td>
 					    </tr>				  
 					  </c:forEach>
 				    
